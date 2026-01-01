@@ -47,7 +47,11 @@
         "${modifier}+b" = "exec ${pkgs-unstable.qutebrowser}/bin/qutebrowser";
         "${modifier}+t" = "exec ${terminal}";
         "${modifier}+w" = "exec ${menu}";
-        "${modifier}+Shift+e" = "exec ${pkgs.wleave}/bin/wleave -x -l ${config.xdg.configHome}/wlogout/layout";
+
+        # controls
+        "${modifier}+Shift+u" = "exec ${pkgs.systemd}/bin/systemctl poweroff";
+        "${modifier}+Shift+r" = "exec ${pkgs.systemd}/bin/systemctl reboot";
+        "Print" = "exec ${pkgs.wayshot}/bin/wayshot -c -e jpg";
 
         # workspaces
         "${modifier}+1" = "workspace number 1";
@@ -93,16 +97,6 @@
         "Ctrl+Alt+Space" = "exec ${pkgs.sway-unwrapped}/bin/swaymsg exit";
         "${modifier}+f" = "fullscreen";
         "${modifier}+q" = "kill";
-
-        # audio
-        "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+";
-        "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-";
-        "XF86AudioMute" = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-
-        # video
-        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
-        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
-        "Print" = "exec ${pkgs.wayshot}/bin/wayshot -c -e jpg";
       };
       
       bars = [(
@@ -112,13 +106,6 @@
         }
         // config.stylix.targets.sway.exportedBarConfig
         )];
-        startup = with pkgs; [
-          {
-            # workaround for services not restarting after ly exit
-            command = ''${systemd}/bin/systemctl --user restart "*".target'';
-            always = true;
-          }
-        ];
     };
     };
 }
