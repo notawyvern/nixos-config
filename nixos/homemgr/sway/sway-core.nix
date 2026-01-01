@@ -12,35 +12,6 @@
     };
   };
 
-  # power menu
-  programs.wlogout = {
-    enable = true;
-    package = null; # wleave is sourced as a keybinding instead
-    layout = with pkgs; [
-      {
-        label = "shutdown";
-        action = "${systemd}/bin/systemctl poweroff";
-        text = "desligar";
-        keybind = "d";
-        icon = "${wleave}/share/wleave/icons/shutdown.svg";
-      }
-      {
-        label = "suspend";
-        action = "${systemd}/bin/systemctl suspend";
-        text = "suspender";
-        keybind = "s";
-        icon = "${wleave}/share/wleave/icons/suspend.svg";
-      }
-      {
-        label = "reboot";
-        action = "${systemd}/bin/systemctl reboot";
-        text = "reiniciar";
-        keybind = "r";
-        icon = "${wleave}/share/wleave/icons/reboot.svg";
-      }
-    ];
-  };
-
   # night light color temperature
   services.wlsunset = {
     enable = true;
@@ -50,59 +21,33 @@
     temperature.night = 2800;
   };
 
-  programs.i3status = {
+  programs.i3status-rust = {
     enable = true;
-    enableDefault = false;
-    general = {
-      separator = "";
-      output_format = "i3bar";
-      colors = true;
-      interval = 5;
-    };
-    modules = {
-      "wireless wlan0" = {
-        position = 1;
-        settings = {
-          format_up = " %quality ";
-          format_down = "";
-          };
-        };
-      "battery 1" = {
-        position = 2;
-        settings = {
-          format = "%status %percentage";
-          format_down = "";
-          last_full_capacity = true;
-          integer_battery_capacity = true;
-          low_threshold = 40;
-          threshold_type = "percentage";
-          status_chr = "󰂏";
-          status_bat = "󰂌";
-          status_full = "󰁹";
-        };
+    bars.main = {
+      settings.theme  = {
+        theme = "native";
+        overrides.separator = "  ";
       };
-      "volume master" = {
-        position = 3;
-        settings = {
-          format = " 󰝚 %volume";
-          format_muted = " 󰝛 %volume";
-          device = "default";
-          mixer = "Master";
-          mixer_idx = 0;
-        };
-      };
-      "tztime localdate" = {
-        position = 4;
-        settings = {
-          format = "  %d/%m/%Y";
-        };
-      };
-      "tztime localtime" = {
-        position = 5;
-        settings = {
-          format = "  %H:%Mh ";
-        };
-      };
+      icons = "material-nf";
+      blocks = 
+      [
+        {
+          block = "net";
+          format = "$icon $signal_strength";
+          inactive_format = "";
+          missing_format = "";
+        }
+        {
+          block = "sound";
+          format = "$icon $volume";
+          show_volume_when_muted = true;
+        }
+        {
+          block = "time";
+          format = "$icon $timestamp.datetime(locale:'pt_BR', f:'%d/%m/%Y, %H:%Mh') ";
+        }
+      ];
     };
   };
+
 }
