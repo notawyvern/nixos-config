@@ -56,6 +56,7 @@
       ps = "https://presearch.com/search?q={}";
       bv = "https://search.brave.com/search?q={}";
       w = "https://grokipedia.com/search?q={}";
+      r = "https://www.reddit.com/search?q={}";
       aw = "https://wiki.archlinux.org/?search={}";
       yt = "https://inv.nadeko.net/search?q={}";
       nix = "https://mynixos.com/search?q={}";
@@ -81,7 +82,6 @@
       meet = "https://meet.jit.si/";
 
       # personal
-      facul-uni-estacio = "https://estudante.estacio.br/login";
       github = "https://github.com/";
       zapzap = "https://web.whatsapp.com/";
       email = "https://account.proton.me/mail";

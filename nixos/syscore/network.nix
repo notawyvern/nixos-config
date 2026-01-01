@@ -6,7 +6,4 @@
     wireless.iwd.enable = true;
   };
 
-  # bluetooth configuration
-  hardware.bluetooth.enable = true;
-
 }

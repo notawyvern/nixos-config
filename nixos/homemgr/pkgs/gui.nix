@@ -16,16 +16,12 @@
       qalculate-gtk
 
       # media and virtualisation
-      virtualboxKvm
-      upscayl
       vlc
+      lxqt.pavucontrol-qt
       kdePackages.kolourpaint
     ]) ++
     (with pkgs-unstable;
     [ 
-      # flash player alternative
-      ruffle
-
       # music streaming
       spotube
       yt-dlp # allows its backend for spotube
@@ -46,35 +42,6 @@
           [System]
           Archiver=lxqt-archiver
           Terminal=alacritty
-        '';
-    };
-    ruffle-preferences = {
-      target = "ruffle/preferences.toml";
-      text =
-        ''
-        gamemode = "on"
-        open_url_mode = "allow"
-        '';
-    };
-    ruffle-bookmarks = {
-      target = "ruffle/bookmarks.toml"; force = true;
-      text =
-        ''
-        [[bookmark]]
-        url = "https://game.aq.com/game/gamefiles/Loader3.swf"
-        name = "AQW"
-
-        [[bookmark]]
-        url = "https://play.dragonfable.com/game/DFLoader.swf"
-        name = "DragonFable"
-
-        [[bookmark]]
-        url = "https://aq.battleon.com/game/flash/Lore4652.swf"
-        name = "AdventureQuest"
-
-        [[bookmark]]
-        url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf"
-        name = "MechQuest"
         '';
     };
   };
@@ -98,13 +65,12 @@
 
   };
 
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
+  # options in https://alacritty.org/config-alacritty.html
   programs.alacritty = {
     enable = true;
-    # custom settings
     settings = {
+      env.SHELL = "${pkgs.fish}/bin/fish";
       selection.save_to_clipboard = true;
-      terminal.shell.program = "${pkgs.zsh}/bin/zsh";
     };
   };
 

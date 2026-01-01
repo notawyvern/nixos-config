@@ -18,6 +18,7 @@ in
     icons = {
       enable = true;
       dark = "breeze-dark";
+      light = "breeze";
       package = pkgs.kdePackages.breeze-icons;
     };
     cursor = {
