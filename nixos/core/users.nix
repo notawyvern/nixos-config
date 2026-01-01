@@ -7,7 +7,7 @@
     description = "crh";
     extraGroups = [ "wheel" ];
   };
-  
+
   security = {
     sudo.enable = false;
     sudo-rs = {
@@ -16,4 +16,3 @@
     };
   };
 }
- 

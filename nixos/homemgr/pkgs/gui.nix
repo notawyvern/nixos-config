@@ -1,85 +1,63 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
 
-  /* manual configurations */
-  imports = [ ({pkgs, ...}: {
-    home.packages = (with pkgs; 
-    [ 
-      # file manager
-      lxqt.pcmanfm-qt
-      lxqt.lxqt-archiver
+  # manual configurations
+  imports = [
+    (
+      { pkgs, ... }:
+      {
+        home.packages =
+          (with pkgs; [
+            # file manager
+            lxqt.pcmanfm-qt
+            lxqt.lxqt-archiver
+            p7zip # archiver's file extensions
 
-      # desktop utils
-      featherpad
-      iwgtk
-      qalculate-gtk
+            # desktop utils
+            featherpad
+            qalculate-qt
 
-      # media and virtualisation
-      virtualboxKvm
-      upscayl
-      vlc
-      kdePackages.kolourpaint
-    ]) ++
-    (with pkgs-unstable;
-    [ 
-      # flash player alternative
-      ruffle
-
-      # music streaming
-      spotube
-      yt-dlp # allows its backend for spotube
-    ]);
-  }) ];
+            # media and virtualisation
+            virtualboxKvm
+            lxqt.pavucontrol-qt
+            kdePackages.kolourpaint
+          ])
+          ++ (with pkgs-unstable; [
+            spotify # music streaming
+          ]);
+      }
+    )
+  ];
 
   xdg.configFile = {
     featherpad = {
-      target = "featherpad/fp.conf"; force = true;
-      text = with config.stylix;
-        if (polarity == "dark") then "[text]"+"\n"+"darkColorScheme = true"
-        else "[text]"+"\n"+"darkColorScheme = false";
+      target = "featherpad/fp.conf";
+      force = true;
+      text =
+        with config.stylix;
+        if (polarity == "dark") then
+          "[text]" + "\n" + "darkColorScheme = true"
+        else
+          "[text]" + "\n" + "darkColorScheme = false";
     };
     pcmanfm-qt = {
-      target = "pcmanfm-qt/default/settings.conf"; force = true;
-      text =
-        ''
-          [System]
-          Archiver=lxqt-archiver
-          Terminal=alacritty
-        '';
-    };
-    ruffle-preferences = {
-      target = "ruffle/preferences.toml";
-      text =
-        ''
-        gamemode = "on"
-        open_url_mode = "allow"
-        '';
-    };
-    ruffle-bookmarks = {
-      target = "ruffle/bookmarks.toml"; force = true;
-      text =
-        ''
-        [[bookmark]]
-        url = "https://game.aq.com/game/gamefiles/Loader3.swf"
-        name = "AQW"
-
-        [[bookmark]]
-        url = "https://play.dragonfable.com/game/DFLoader.swf"
-        name = "DragonFable"
-
-        [[bookmark]]
-        url = "https://aq.battleon.com/game/flash/Lore4652.swf"
-        name = "AdventureQuest"
-
-        [[bookmark]]
-        url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf"
-        name = "MechQuest"
-        '';
+      target = "pcmanfm-qt/default/settings.conf";
+      force = true;
+      text = ''
+        [System]
+        Archiver=lxqt-archiver
+        Terminal=alacritty
+      '';
     };
   };
 
-  /* declared modules */
+  # declared modules
 
   programs.sioyek = {
     enable = true;
@@ -87,8 +65,7 @@
       "font_size" = toString fonts.sizes.applications;
       "status_bar_font_size" = toString fonts.sizes.desktop;
       "ui_font" = fonts.monospace.name;
-      "default_dark_mode" = 
-        if (polarity == "dark") then "1" else "0";
+      "default_dark_mode" = if (polarity == "dark") then "1" else "0";
     };
     bindings = {
       toggle_dark_mode = "<C-i>";
@@ -98,13 +75,23 @@
 
   };
 
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
+  programs.mpv = {
+    enable = true;
+    scripts = with pkgs.mpvScripts; [ uosc ];
+    scriptOpts = {
+      uosc = {
+        disable_elements = "idle_indicator";
+        controls_persistency = "idle,paused";
+      };
+    };
+  };
+
+  # options in https://alacritty.org/config-alacritty.html
   programs.alacritty = {
     enable = true;
-    # custom settings
     settings = {
+      env.SHELL = "${pkgs.fish}/bin/fish";
       selection.save_to_clipboard = true;
-      terminal.shell.program = "${pkgs.zsh}/bin/zsh";
     };
   };
 
@@ -122,7 +109,7 @@
       list.all = "yes";
     };
   };
-  
+
   programs.freetube = {
     enable = true;
     package = pkgs-unstable.freetube;
@@ -147,8 +134,9 @@
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium-fhs;
-    profiles.default = { 
+    package = pkgs.vscodium;
+    mutableExtensionsDir = false;
+    profiles.default = {
       extensions = with pkgs.vscode-extensions; [
         vscodevim.vim
         ms-ceintl.vscode-language-pack-pt-br

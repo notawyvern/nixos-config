@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
   # Bootloader.
   boot.loader = {
@@ -6,6 +6,7 @@
     limine = {
       enable = true;
       secureBoot.enable = true;
+      extraConfig = "quiet: yes"; # hides limine, shown by arrow press
     };
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;

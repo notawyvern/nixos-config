@@ -4,75 +4,91 @@
 
 ## Table of Contents
 - [Overview](#overview)
-- [Questions & Answers](#questions--answers)
-  - [Why Home Manager Won't Build?](#why-home-manager-wont-build)
-  - [How is Limine Declared but Not Installed on Rebuild?](#how-is-limine-declared-but-not-installed-on-rebuild)
-  - [How to Change the Wallpaper?](#how-to-change-the-wallpaper)
-  - [What Keybindings should I Know?](#what-keybindings-should-i-know)
-  - [Can I Select Software?](#can-i-select-software)
+- [Structure](#structure)
+- [Installed Software](#installed-software)
+- [Shortcut Cheatsheet](#shortcut-cheatsheet)
+- [Wallpapers](#wallpapers)
 
 ## Overview
 
-![Screenshot](assets/sway-desk.jpg)
+![Screenshot](assets/mango-desk.jpg)
 
 Organized through the power of Home Manager, flakes plus modules, and GitHub referencing.
 
-![Screenshot](assets/qutebrowser.jpg)
+![Screenshot](assets/zenbrowser.jpg)
 
-Personal quickmarks are declared. The [startpage](https://github.com/notawyvern/startpage) is too and refers to a repository itself. Home Manager allows deep tweaking into apps, both on CLI and GUI. Vi mode on Zsh is enabled by default. And these things are just the tip of the iceberg.
+Bookmarks are declared. Stylix takes care of a cohesive theming. Vi mode on fish is enabled on Home Manager. And these things are just the tip of the iceberg.
 
-## Questions & Answers
+## Structure
 
-### Why Home Manager Won't Build?
+- `flake.nix`: sourcing of all files and inputs, home-manager as a module.
+- `nixos`: all declared configurations.
+    - `core`: essential files for the installation.
+        - **audio.nix**: pipewire
+        - **boot.nix**: limine with secure boot, latest vanilla kernel
+        - **locale.nix**: pt-br, America/Sao_Paulo timezone
+        - **network.nix**: systemd-networkd, ethernet only
+        - **pkgmgr.nix**: unfree packages enabled
+        - **swap.nix**: same zram amount as ram
+        - **users.nix**: mutable, sudo-rs
+    - `global`: non-essential files for all users.
+        - **loginmgr.nix**: gtkgreet with cage and stylix theming
+        - **stylix.nix**: cohesive theme for all users
+    - `homemgr`: home manager.
+        - `mangowc`: wayland compositor configuration.
+            - **mango-core.nix**: better mangowc ux with tofi menu, waybar
+            - **mango.nix**: flake-added options, personal keybindings, autostart binaries
+        - `pkgs`: user installed packages.
+            - **cli.nix**: e.g., custom alacritty shell, colors for terminal
+            - **gui.nix**: many desktop applications
+            - **zen-browser.nix**: heavily tweaked browser: ublock origin, security improvements by default
 
-Probably your dotfiles are getting in the way. I suggest moving them to the .bak format for using later on. 
+## Installed Software
 
-### How is Limine Declared but Not Installed on Rebuild?
+The majority of the packages are declared in [homemgr](./nixos/homemgr) and [global](./nixos/global). Cherry picking them might save some bandwidth and time when rebuilding NixOS.
 
-Make sure your system is pointing to its EFI file in order to boot. You can do so through your firmware vendor, the BIOS/UEFI, or by using [efibootmgr](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface#efibootmgr).
+The directory [pkgs](./nixos/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. Most of them if not all follow:
 
-### How to Change the Wallpaper?
+* **IT**
+    - VSCodium
+    - git
+    - Alacritty as a terminal emulator
+    - VirtualBox
+    - Vim
+    - htop
+    - fish (as in Home Manager)
 
-The file [stylix.nix](./nixos/syspkgs/stylix.nix) references it. So change the line. The built-in code fetches my wallpaper repo and copies some really nice images to the /nix/store. If you're interested, [take a look](https://github.com/notawyvern/wallpapers).
+* **FUN**
+    - FreeTube
+    - Spotify
 
-### What Keybindings should I Know?
+* **GENERAL**
+    - mpv (uosc gui)
+    - fastfetch
+    - KolourPaint
+    - Zen Browser
+    - Qalculate!'s GTK version
+    - featherpad
+    - pcmanfm-qt
+    - pavucontrol-qt
+    - lxqt-archiver
+    - sioyek (a pdf viewer)
+    - swayimg to view images
+
+## Shortcut Cheatsheet
 
 The Windows or the Super key is used as Mod (modifier). The following keys are the most important.
 
-- **Mod+b**: opens qutebrowser
+- **Arrow keys**: press during boot to select generations
+- **Mod+b**: opens browser
 - **Mod+w**: launches tofi menu (an app chooser alternative to dmenu)
 - **Mod+t**: opens the alacritty terminal
 - **Mod+q**: closes the currently focused window
 - **Mod+number**: changes the workspace
-- **Mod+Shift+e**: starts power menu
-- **Ctrl+Alt+Space**: quits sway back to tuigreet
+- **Ctrl+Alt+Space**: quits mangowc back to gtkgreet
+- **Mod+Shift+u**: powers off
+- **Mod+Shift+r**: reboots
 
-### Can I Select Software?
+## Wallpapers
 
-The majority of the packages are declared in [homemgr](./nixos/homemgr) and [syspkgs](./nixos/syspkgs). Cherry picking them might save some bandwidth and time when rebuilding NixOS. It is a wise measure, since the deployment can be faster.
-
-The directory [pkgs](./nixos/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. They are the following:
-
-- FreeTube
-- vlc
-- VSCodium
-- fastfetch
-- ruffle
-- KolourPaint
-- Spotube + ytdlp
-- Upscayl
-- VirtualBox
-- Vim
-- htop
-- Zsh (as in Home Manager)
-- git
-- Qalculate!'s GTK version
-- featherpad
-- pcmanfm-qt
-- lxqt-archiver
-- iwgtk
-- sioyek (a pdf viewer)
-- swayimg to view images
-- Alacritty as a terminal emulator
-
-You can be a minimalist and get rid of what is relevant, including by removing it elsewhere, but this is an untested route. The beauty of Linux is that you can do whatever you want. If so, you still can use some reference.
+The file [stylix.nix](./nixos/global/stylix.nix) references one. So change the line. The built-in code fetches my wallpaper repo and copies some really nice images to the /nix/store. If you're interested, [take a look](https://github.com/notawyvern/wallpapers).
