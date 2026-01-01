@@ -56,6 +56,7 @@
       ps = "https://presearch.com/search?q={}";
       bv = "https://search.brave.com/search?q={}";
       w = "https://grokipedia.com/search?q={}";
+      r = "https://www.reddit.com/search?q={}";
       aw = "https://wiki.archlinux.org/?search={}";
       yt = "https://inv.nadeko.net/search?q={}";
       nix = "https://mynixos.com/search?q={}";
@@ -64,10 +65,9 @@
     quickmarks = {
       # fun
       anibunker = "https://anibunker.com/";
-      anigo = "https://anigo.to/";
-      betteranime = "https://betteranime.io/";
+      anigc = "https://animesgc.com/";
+      anikyuu = "https://anikyuu.to/";
       weebcentral = "https://weebcentral.com/";
-      scrobble = "https://listenbrainz.org/";
       youtube = "https://inv.nadeko.net/";
       mal = "https://myanimelist.net/";
       mangafire = "https://mangafire.to/";
@@ -75,17 +75,15 @@
       # utils
       urlvoid = "https://www.urlvoid.com/";
       waybackmachine = "https://web.archive.org/";
-      annaarchive = "https://annas-archive.li/";
-      YOPmail = "https://yopmail.com/en/";
+      annaarchive = "https://annas-archive.gl/";
+      YOPmail = "https://yopmail.com/";
       chatgpt = "https://duck.ai/";
       meet = "https://meet.jit.si/";
 
       # personal
-      facul-uni-estacio = "https://estudante.estacio.br/login";
       github = "https://github.com/";
-      zapzap = "https://web.whatsapp.com/";
-      email = "https://account.proton.me/mail";
-      simplelogin = "https://app.simplelogin.io/auth/login";
+      email = "https://mail.proton.me/";
+      simplelogin = "https://app.simplelogin.io/";
       drive-cloud = "https://app.koofr.net/";
     };
   };

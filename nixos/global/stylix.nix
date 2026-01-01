@@ -5,9 +5,9 @@ let
   {
     owner = "notawyvern";
     repo = "wallpapers";    
-    rev = "c354359b4f20677acca6cb794dadd9302efe9721";
-    sha256 = "sha256-z83FDpMM1PiGyyPE+t87XnqE/DNBi0wAk9F+WX2GlA8=";
-  } + "/sci-fi/redsky-neon.jpg");
+    rev = "994b29f29214e0e6dcf6d72332d2648f308b17b8";
+    sha256 = "sha256-eVZR4DpG5fY6kZM6TJ/aa/07wtAAyYS0l0RSyZzqqe4=";
+  } + "/fantasy/magical-land-japan-2.jpg");
 in 
 {
   stylix = {
