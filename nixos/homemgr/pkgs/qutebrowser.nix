@@ -25,6 +25,7 @@
       # general
       content.headers.accept_language = "pt-BR,pt;q=0.9";
       content.local_content_can_access_remote_urls = true; # so the homepage's search works
+      content.tls.certificate_errors = "block";
 
       content.blocking.adblock.lists = [
         # basics

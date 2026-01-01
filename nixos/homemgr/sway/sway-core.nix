@@ -12,35 +12,6 @@
     };
   };
 
-  # power menu
-  programs.wlogout = {
-    enable = true;
-    package = null; # wleave is sourced as a keybinding instead
-    layout = with pkgs; [
-      {
-        label = "shutdown";
-        action = "${systemd}/bin/systemctl poweroff";
-        text = "desligar";
-        keybind = "d";
-        icon = "${wleave}/share/wleave/icons/shutdown.svg";
-      }
-      {
-        label = "suspend";
-        action = "${systemd}/bin/systemctl suspend";
-        text = "suspender";
-        keybind = "s";
-        icon = "${wleave}/share/wleave/icons/suspend.svg";
-      }
-      {
-        label = "reboot";
-        action = "${systemd}/bin/systemctl reboot";
-        text = "reiniciar";
-        keybind = "r";
-        icon = "${wleave}/share/wleave/icons/reboot.svg";
-      }
-    ];
-  };
-
   # night light color temperature
   services.wlsunset = {
     enable = true;

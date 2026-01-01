@@ -16,9 +16,7 @@
       qalculate-gtk
 
       # media and virtualisation
-      virtualboxKvm
-      upscayl
-      vlc
+      haruna
       kdePackages.kolourpaint
     ]) ++
     (with pkgs-unstable;
@@ -33,6 +31,10 @@
   }) ];
 
   xdg.configFile = {
+    haruna = {
+      target = "haruna/haruna.conf"; force = true;
+      text = "[General]"+"\n"+"ShowHeader=false";
+    };
     featherpad = {
       target = "featherpad/fp.conf"; force = true;
       text = with config.stylix;
@@ -98,13 +100,12 @@
 
   };
 
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
+  # options in https://alacritty.org/config-alacritty.html
   programs.alacritty = {
     enable = true;
-    # custom settings
     settings = {
+      env.SHELL = "${pkgs.fish}/bin/fish";
       selection.save_to_clipboard = true;
-      terminal.shell.program = "${pkgs.zsh}/bin/zsh";
     };
   };
 

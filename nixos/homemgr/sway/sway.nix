@@ -47,7 +47,10 @@
         "${modifier}+b" = "exec ${pkgs-unstable.qutebrowser}/bin/qutebrowser";
         "${modifier}+t" = "exec ${terminal}";
         "${modifier}+w" = "exec ${menu}";
-        "${modifier}+Shift+e" = "exec ${pkgs.wleave}/bin/wleave -x -l ${config.xdg.configHome}/wlogout/layout";
+
+        # power controls
+        "${modifier}+Shift+u" = "exec ${pkgs.systemd}/bin/systemctl poweroff";
+        "${modifier}+Shift+r" = "exec ${pkgs.systemd}/bin/systemctl reboot";
 
         # workspaces
         "${modifier}+1" = "workspace number 1";
@@ -112,13 +115,6 @@
         }
         // config.stylix.targets.sway.exportedBarConfig
         )];
-        startup = with pkgs; [
-          {
-            # workaround for services not restarting after ly exit
-            command = ''${systemd}/bin/systemctl --user restart "*".target'';
-            always = true;
-          }
-        ];
     };
     };
 }

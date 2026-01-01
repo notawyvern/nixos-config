@@ -3,9 +3,6 @@
   # trash for file manager
   services.gvfs.enable = true;
 
-  # completion for programs in zsh 
-  environment.pathsToLink = [ "/share/zsh" ];
-
   # low level
   programs.dconf.enable = true;
   services.dbus.implementation = "broker";

@@ -20,7 +20,6 @@
     };
   };
 
-  # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
     settings = {
@@ -29,24 +28,34 @@
     };
   };
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion = {
+  # gnu programs alternatives
+  programs = {
+    bat.enable = true;
+    eza = {
       enable = true;
-      strategy = [ "history" ];
+      icons = "always";
     };
-    completionInit = "autoload -U compinit && compinit -C && bindkey '^E' end-of-line";
-    defaultKeymap = "viins";
-    shellAliases = {
+  };
+
+  home.shell.enableFishIntegration = true;
+  programs.fish = {
+    enable = true;
+    binds = {
+      "ctrl-e --mode insert".command = "accept-autosuggestion";
+    };
+    functions = {
+      fish_greeting = ""; fish_mode_prompt = "";
+      fish_user_key_bindings = "fish_vi_key_bindings default";
+      fish_prompt = "echo -s ''(set_color --bold green) [$USER@$hostname:$PWD]'$ '";
+    };
+    shellAliases = with pkgs; {
       neofetch = "fastfetch";
-      ls = "ls --color=auto";
-      vdir = "vdir --color=auto";
-      dir = "dir --color=auto";
-    };
-    setOptions = [ "nocaseglob" ];
-    sessionVariables = {
-      PROMPT="%F{green}%B[%n@%b%f%k%F{green}%B%m:%b%f%k%F{green}%B%~]%b%f%k ";
+      ls = "eza";
+      cat = "bat";
+      less = "bat";
+      du = "${ncdu}/bin/ncdu";
+      ping = "${gping}/bin/gping";
+      df = "${duf}/bin/duf";
     };
   };
 
