@@ -21,33 +21,39 @@ Bookmarks are declared. Stylix takes care of a cohesive theming. Vi mode on fish
 
 ## Structure
 
-- `flake.nix`: sourcing of all files and inputs, home-manager as a module.
+**NOTE**: By design, the repository has no hardware configuration. Remember to generate it.
+
 - `nixos`: all declared configurations.
-    - `core`: essential files for the installation.
-        - **audio.nix**: pipewire
-        - **boot.nix**: limine with secure boot, latest vanilla kernel
-        - **locale.nix**: pt-br, America/Sao_Paulo timezone
-        - **network.nix**: systemd-networkd, ethernet only
-        - **pkgmgr.nix**: unfree packages enabled
-        - **swap.nix**: same zram amount as ram
-        - **users.nix**: mutable, sudo-rs
-    - `global`: non-essential files for all users.
-        - **loginmgr.nix**: gtkgreet with cage and stylix theming
-        - **stylix.nix**: cohesive theme for all users
-    - `homemgr`: home manager.
-        - `mangowc`: wayland compositor configuration.
-            - **mango-core.nix**: better mangowc ux with tofi menu, waybar
-            - **mango.nix**: flake-added options, personal keybindings, autostart binaries
-        - `pkgs`: user installed packages.
-            - **cli.nix**: e.g., custom alacritty shell, colors for terminal
-            - **gui.nix**: many desktop applications
-            - **zen-browser.nix**: heavily tweaked browser: ublock origin, security improvements by default
+    - `flake.nix`: import-tree and flake-parts dendritic flake
+        - `modules`: mostly dendritic configuration.
+            - `core`: essential files for the installation.
+                - **audio.nix**: pipewire
+                - **boot.nix**: limine with secure boot, latest vanilla kernel
+                - **locale.nix**: pt-br, America/Sao_Paulo timezone
+                - **network.nix**: systemd-networkd, ethernet only
+                - **pkgmgr.nix**: unfree packages enabled
+                - **sourcing.nix**: sources nixos modules, configure systems
+                - **swap.nix**: same zram amount as ram
+                - **users.nix**: mutable, sudo-rs
+            - `global`: non-essential files for all users.
+                - **loginmgr.nix**: gtkgreet with cage and stylix theming
+                - **services.nix**: global services
+                - **stylix.nix**: cohesive theme for all users
+            - `homemgr`: home manager.
+                - **home.nix**: sources hm modules, configure xdg
+                - `mangowc`: wayland compositor configuration.
+                    - **mango-core.nix**: better mangowc ux with tofi menu, waybar
+                    - **mango.nix**: flake-added options, personal keybindings, autostart binaries
+                - `pkgs`: user installed packages.
+                    - **cli.nix**: e.g., custom alacritty shell, colors for terminal
+                    - **gui.nix**: many desktop applications
+                    - **zen-browser.nix**: heavily tweaked browser: ublock origin, security improvements by default
 
 ## Installed Software
 
-The majority of the packages are declared in [homemgr](./nixos/homemgr) and [global](./nixos/global). Cherry picking them might save some bandwidth and time when rebuilding NixOS.
+The majority of the packages are declared in [homemgr](./nixos/modules/homemgr) and [global](./nixos/modules/global). Cherry picking them might save some bandwidth and time when rebuilding NixOS.
 
-The directory [pkgs](./nixos/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. Most of them if not all follow:
+The directory [pkgs](./nixos/modules/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. Most of them if not all follow:
 
 * **IT**
     - VSCodium
@@ -91,4 +97,4 @@ The Windows or the Super key is used as Mod (modifier). The following keys are t
 
 ## Wallpapers
 
-The file [stylix.nix](./nixos/global/stylix.nix) references one. So change the line. The built-in code fetches my wallpaper repo and copies some really nice images to the /nix/store. If you're interested, [take a look](https://github.com/notawyvern/wallpapers).
+The file [stylix.nix](./nixos/modules/global/stylix.nix) references one. So change the line. The built-in code fetches my wallpaper repo and copies some really nice images to the /nix/store. If you're interested, [take a look](https://github.com/notawyvern/wallpapers).
