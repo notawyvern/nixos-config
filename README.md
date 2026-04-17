@@ -3,51 +3,81 @@
 *Anybody is free to use, modify or look into the code!*
 
 ## Table of Contents
-- [Overview](#overview)
-- [Structure](#structure)
+- [Introduction](#introduction)
+- [Tree](#Tree)
+    - [Structure](#structure)
 - [Installed Software](#installed-software)
 - [Shortcut Cheatsheet](#shortcut-cheatsheet)
 - [Wallpapers](#wallpapers)
+- [Screenshoots](#screenshoots)
 
-## Overview
+## Introduction
 
-![Screenshot](assets/mango-desk.jpg)
+>[!CAUTION]
+> This configuration is highly opinionated and very unstable. You may adopt it, but it is wiser to study or copy parts of it only.
 
-Organized through the power of Home Manager, flakes plus modules, and GitHub referencing.
+It is a personal project. While scopes are reproducible, my needs weigh more. However, it is good to read as a fellow NixOS user. Then you won't bother with problems already solved.
 
-![Screenshot](assets/zenbrowser.jpg)
+## Tree
 
-Bookmarks are declared. Stylix takes care of a cohesive theming. Vi mode on fish is enabled on Home Manager. And these things are just the tip of the iceberg.
+>[!IMPORTANT]
+>There is no hardware configuration by design; remember to [generate it](https://wiki.nixos.org/wiki/Nixos-generate-config). 
 
-## Structure
+>[!IMPORTANT]
+>Currently, Limine secure boot is not fully declarative on NixOS. The [wiki page](https://wiki.nixos.org/wiki/Limine#Secure_Boot) can help you enable it.
 
-- `flake.nix`: sourcing of all files and inputs, home-manager as a module.
-- `nixos`: all declared configurations.
-    - `core`: essential files for the installation.
-        - **audio.nix**: pipewire
-        - **boot.nix**: limine with secure boot, latest vanilla kernel
-        - **locale.nix**: pt-br, America/Sao_Paulo timezone
-        - **network.nix**: systemd-networkd, ethernet only
-        - **pkgmgr.nix**: unfree packages enabled
-        - **swap.nix**: same zram amount as ram
-        - **users.nix**: mutable, sudo-rs
-    - `global`: non-essential files for all users.
-        - **loginmgr.nix**: gtkgreet with cage and stylix theming
-        - **stylix.nix**: cohesive theme for all users
-    - `homemgr`: home manager.
-        - `mangowc`: wayland compositor configuration.
-            - **mango-core.nix**: better mangowc ux with tofi menu, waybar
-            - **mango.nix**: flake-added options, personal keybindings, autostart binaries
-        - `pkgs`: user installed packages.
-            - **cli.nix**: e.g., custom alacritty shell, colors for terminal
-            - **gui.nix**: many desktop applications
-            - **zen-browser.nix**: heavily tweaked browser: ublock origin, security improvements by default
+```bash
+.
+├── assets
+│   ├── mango-desk.jpg
+│   └── zenbrowser.jpg
+├── flake.lock
+├── flake.nix
+├── LICENSE
+├── modules
+│   ├── core
+│   │   ├── audio.nix
+│   │   ├── boot.nix
+│   │   ├── locale.nix
+│   │   ├── network.nix
+│   │   ├── pkgmgr.nix
+│   │   ├── sourcing.nix
+│   │   ├── swap.nix
+│   │   └── users.nix
+│   ├── global
+│   │   ├── loginmgr.nix
+│   │   ├── services.nix
+│   │   └── stylix.nix
+│   └── homemgr
+│       ├── home.nix
+│       ├── mangowc
+│       │   ├── mango-core.nix
+│       │   └── mango.nix
+│       └── pkgs
+│           ├── cli.nix
+│           ├── gui.nix
+│           ├── unstable.nix
+│           └── zen-browser.nix
+└── README.md
+```
+
+### Structure:
+
+The configuration implements the dendritic pattern. Files can be freely moved in [modules](./modules/) without consequences.
+
+In [core](./modules/core/) are features for a usable NixOS. User crh is declared but mutable. Brazilian Portuguese is enforced. 
+
+From within *core*, [sourcing.nix](./modules/core/sourcing.nix) file declares systems and all modules directly, except for Home Manager's ones.
+
+The [global](./modules/global/) path locates extras. [loginmgr.nix](./modules/global/loginmgr.nix) partly references stylix, so better both be enabled.
+
+At [homemgr](./modules/homemgr/) lots of heavily tweaked software are installed. It is needed for a GUI session and a must for a desktop PC. The main file [home.nix](./modules/homemgr/home.nix) sources its modules and configures xdg.
 
 ## Installed Software
 
-The majority of the packages are declared in [homemgr](./nixos/homemgr) and [global](./nixos/global). Cherry picking them might save some bandwidth and time when rebuilding NixOS.
+The majority of the packages are declared in [homemgr](./modules/homemgr) and [global](./modules/global). Cherry picking them might save some bandwidth and time when rebuilding NixOS.
 
-The directory [pkgs](./nixos/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. Most of them if not all follow:
+The directory [pkgs](./modules/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. Most of them if not all follow:
 
 * **IT**
     - VSCodium
@@ -60,7 +90,7 @@ The directory [pkgs](./nixos/homemgr/pkgs) contain mostly software I find non-es
 
 * **FUN**
     - FreeTube
-    - Spotify
+    - Spotube
 
 * **GENERAL**
     - mpv (uosc gui)
@@ -70,10 +100,12 @@ The directory [pkgs](./nixos/homemgr/pkgs) contain mostly software I find non-es
     - Qalculate!'s GTK version
     - featherpad
     - pcmanfm-qt
-    - pavucontrol-qt
     - lxqt-archiver
     - sioyek (a pdf viewer)
     - swayimg to view images
+
+>[!NOTE]
+>Click the waybar icons to configure network or audio through GUI.
 
 ## Shortcut Cheatsheet
 
@@ -91,4 +123,10 @@ The Windows or the Super key is used as Mod (modifier). The following keys are t
 
 ## Wallpapers
 
-The file [stylix.nix](./nixos/global/stylix.nix) references one. So change the line. The built-in code fetches my wallpaper repo and copies some really nice images to the /nix/store. If you're interested, [take a look](https://github.com/notawyvern/wallpapers).
+[flake.nix](./flake.nix) references one. Just change the line. The line fetches an image from my wallpaper repo to the /nix/store. If you're interested in it, [take a look](https://github.com/notawyvern/wallpapers).
+
+## Screenshoots
+
+![Screenshot](assets/mango-desk.jpg)
+
+![Screenshot](assets/zenbrowser.jpg)
