@@ -19,6 +19,7 @@
 
         # desktop utils
         featherpad
+        qpdfview
         qalculate-qt
 
         # media and virtualisation
@@ -41,6 +42,14 @@
             else
               "[text]" + "\n" + "darkColorScheme = false";
         };
+        qpdfview = {
+          target = "qpdfview/qpdfview.conf";
+          force = true;
+          text = ''
+            [mainWindow]
+            restorePerFileSettings=true
+          '';
+        };
         pcmanfm-qt = {
           target = "pcmanfm-qt/default/settings.conf";
           force = true;
@@ -50,22 +59,6 @@
             Terminal=alacritty
           '';
         };
-      };
-
-      programs.sioyek = {
-        enable = true;
-        config = with config.stylix; {
-          "font_size" = toString fonts.sizes.applications;
-          "status_bar_font_size" = toString fonts.sizes.desktop;
-          "ui_font" = fonts.monospace.name;
-          "default_dark_mode" = if (polarity == "dark") then "1" else "0";
-        };
-        bindings = {
-          toggle_dark_mode = "<C-i>";
-          next_page = "J";
-          previous_page = "K";
-        };
-
       };
 
       programs.mpv = {

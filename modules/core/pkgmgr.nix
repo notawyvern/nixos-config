@@ -24,8 +24,10 @@
         };
       };
 
-      # Safer to leave value at the first install's version number.
-      # Read docs before changing it ( eg. man configuration.nix )
+      # Pinned stateful data for compatibility;
+      # doesn't determine version of packages.
+      #
+      # To safely change it read the release notes.
       system.stateVersion = "25.11"; # Did you read the comment?
     };
 

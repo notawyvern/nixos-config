@@ -33,11 +33,11 @@
       home = {
         username = "crh";
         homeDirectory = "/home/crh";
-        # Value of configuration compatible with Home Manager. To keep
-        # it avoids breakage due to changes.
+        # Pinned stateful data for compatibility;
+        # doesn't determine version of packages.
         #
-        # No need to change it but, if you want to, read the release notes.
-        stateVersion = "25.11";
+        # To safely change it read the release notes.
+        stateVersion = "25.11"; # Did you read the comment?
       };
 
       xdg.userDirs = {

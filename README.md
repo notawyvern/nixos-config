@@ -100,7 +100,7 @@ The directory [pkgs](./modules/homemgr/pkgs) contain mostly software I find non-
     - featherpad
     - pcmanfm-qt
     - lxqt-archiver
-    - sioyek (a pdf viewer)
+    - qpdfview
     - swayimg to view images
 
 >[!NOTE]
