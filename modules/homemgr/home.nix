@@ -42,6 +42,7 @@
 
       xdg.userDirs = {
         enable = true;
+        setSessionVariables = true;
         createDirectories = true;
 
         desktop = "${config.home.homeDirectory}/Área de Trabalho";
@@ -52,6 +53,7 @@
         publicShare = "${config.home.homeDirectory}/Público";
         templates = "${config.home.homeDirectory}/Modelos";
         videos = "${config.home.homeDirectory}/Vídeos";
+        projects = null;
       };
 
       xdg = {

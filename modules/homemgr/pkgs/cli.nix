@@ -61,9 +61,9 @@
         functions = {
           fish_greeting = "";
           fish_mode_prompt = "";
-          fish_user_key_bindings = "fish_vi_key_bindings default";
           fish_prompt = "echo -s ''(set_color --bold green) [$USER@$hostname:$PWD]'$ '";
         };
+        shellInit = "set -g fish_key_bindings fish_vi_key_bindings";
         shellAliases = with pkgs; {
           # better outputs & tooling
           cat = "${bat}/bin/bat";

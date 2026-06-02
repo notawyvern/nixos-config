@@ -5,6 +5,12 @@
 }:
 
 {
+  flake.nixosModules.services =
+    { pkgs, ... }:
+    {
+      services.gvfs.enable = true; # trash support
+      programs.dconf.enable = true;
+    };
 
   flake.homeModules.guiapps =
     { pkgs, config, ... }:
@@ -117,7 +123,7 @@
         };
       };
 
-      programs.vscode = {
+      programs.vscodium = {
         enable = true;
         package = pkgs.vscodium;
         mutableExtensionsDir = false;

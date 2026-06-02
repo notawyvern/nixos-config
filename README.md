@@ -46,7 +46,6 @@ It is a personal project. While scopes are reproducible, my needs weigh more. Ho
 │   │   └── users.nix
 │   ├── global
 │   │   ├── loginmgr.nix
-│   │   ├── services.nix
 │   │   └── stylix.nix
 │   └── homemgr
 │       ├── home.nix

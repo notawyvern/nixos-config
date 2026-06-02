@@ -2,12 +2,12 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
+    import-tree.url = "github:denful/import-tree";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     mango.url = "github:mangowm/mango"; # wayland compositor
@@ -20,7 +20,7 @@
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:nix-community/stylix/release-25.11";
+    stylix.url = "github:nix-community/stylix/release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/fantasy/magical-land-japan.jpg";
