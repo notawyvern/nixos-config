@@ -115,7 +115,7 @@
               "SUPER,w,spawn,${pkgs.tofi}/bin/tofi-drun"
               "SUPER,t,spawn,${pkgs.alacritty}/bin/alacritty"
               "SUPER,b,spawn,${zen-browser}/bin/zen-beta"
-              "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c -e jpg"
+              "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c --encoding jpg"
 
               # power
               "SUPER+Shift,u,spawn,${pkgs.systemd}/bin/systemctl poweroff"
