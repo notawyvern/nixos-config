@@ -202,11 +202,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780361225,
-        "narHash": "sha256-wnV9ttf4fPWNonBIQmvlrSlNpQYgx5HgWWd007mwIFA=",
+        "lastModified": 1780883961,
+        "narHash": "sha256-WU6SUrESuPiEXEUvX4D51AgWrXRJty+sLJBwBaDBGqE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e28654b71096e08c019d4861ca26acb646f583d8",
+        "rev": "4eb4fec41674d5b059aa2eedf0f98453890546fa",
         "type": "github"
       },
       "original": {
@@ -240,11 +240,11 @@
         "scenefx": "scenefx"
       },
       "locked": {
-        "lastModified": 1780541279,
-        "narHash": "sha256-UdwXcUeOgfct2GBadVCsonMIay3Gndylr0pMmxz7z/k=",
+        "lastModified": 1780918140,
+        "narHash": "sha256-jL3S/4Re7X8P0NdVPWdVdD0tv7hiznXPkdI34VCgRe0=",
         "owner": "mangowm",
         "repo": "mango",
-        "rev": "8a92184667ae945955c2139847e5e1994a5f9671",
+        "rev": "36398a1af2bc06f57154a68934a4f89045c86a77",
         "type": "github"
       },
       "original": {
@@ -255,11 +255,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1780453794,
-        "narHash": "sha256-bXMRa9VTsHSPXL4Cw8R6JJLQeY3Y/IP4+YJCYVmQ7FY=",
+        "lastModified": 1780902259,
+        "narHash": "sha256-q8yYEC5f1mFlQO9RGna4LTc9QrcvWunX6FYp83munkQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6b316287bae2ee04c9b93c8c858d930fd07d7338",
+        "rev": "bd0ff2d3eac24699c3664d5966b9ef36f388e2ca",
         "type": "github"
       },
       "original": {
@@ -307,11 +307,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780699497,
-        "narHash": "sha256-RJvDH0aE2TXMYXWNEiLKa0SECpl5CX7F+zQ/aRL3uIA=",
+        "lastModified": 1780961908,
+        "narHash": "sha256-WpqoHY3A5GWFREOKyNazVSg6764Mavuv7JFmPlTco1Q=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "739c5413ff80b5ed446210572c0af577bea19bfd",
+        "rev": "f1b647a8d731701a93f200ceb998bb75c5209cc2",
         "type": "github"
       },
       "original": {
@@ -399,11 +399,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1780684873,
-        "narHash": "sha256-GM4O0ZSiK/bknRnPY4nNsFVhQHbVtkRrqUj9TE0Ud6s=",
+        "lastModified": 1780702455,
+        "narHash": "sha256-+srjPGNy67nKytYwdlepycL51IG6S34sS4MKRZXK8G0=",
         "owner": "nix-community",
         "repo": "stylix",
-        "rev": "497618de21c0d0ffd82505f9d6f231cfcf419f32",
+        "rev": "54fa19702f4f2c7f6a981a92850678933588af9a",
         "type": "github"
       },
       "original": {
@@ -495,7 +495,7 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-w0brtvVIJoN5yu85Uph5GlUJvKiBsLpkuy0it0oICn8=",
+        "narHash": "sha256-QnMsEpdaE7jmU6uA853XvFBWP0k2kXtIUVTKD2PWUG8=",
         "type": "file",
         "url": "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/fantasy/magical-land-japan.jpg"
       },
@@ -514,11 +514,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780567926,
-        "narHash": "sha256-LVaiAnBwgr2YotaIlrcwCgmbwHsE2ccegRztLjur/d4=",
+        "lastModified": 1780957638,
+        "narHash": "sha256-NQ0WpkNDRR79BWGNmh1dpgchGJnALW7De71kaXD87nc=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "eea9ae34eb9011aee9b8ce8ee2bc2dd111ee8285",
+        "rev": "fc9b27eb5585548282004fac3f0d34fcf2f06467",
         "type": "github"
       },
       "original": {

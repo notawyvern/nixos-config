@@ -109,6 +109,10 @@
                 toolbar = true;
                 bookmarks = [
                   {
+                    name = "edX";
+                    url = "https://edx.org/";
+                  }
+                  {
                     name = "GitHub";
                     url = "https://github.com/";
                   }
@@ -133,6 +137,10 @@
                   {
                     name = "AniBunker";
                     url = "https://anibunker.com/";
+                  }
+                  {
+                    name = "Animes Digital";
+                    url = "https://animesdigital.org/";
                   }
                   {
                     name = "AnimesOnline";
