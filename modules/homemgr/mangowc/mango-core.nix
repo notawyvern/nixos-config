@@ -60,7 +60,7 @@
             tooltip = false;
             scroll-step = 5.0;
             on-click = "${pkgs.lxqt.pavucontrol-qt}/bin/pavucontrol-qt";
-            on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           };
         };
       };
