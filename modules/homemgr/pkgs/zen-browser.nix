@@ -139,6 +139,10 @@
                     url = "https://anibunker.com/";
                   }
                   {
+                    name = "Anikyuu";
+                    url = "https://anikyuu.to/";
+                  }
+                  {
                     name = "Animes Digital";
                     url = "https://animesdigital.org/";
                   }
@@ -175,6 +179,10 @@
                   {
                     name = "ArchWiki";
                     url = "https://wiki.archlinux.org/";
+                  }
+                  {
+                    name = "ChatGPT";
+                    url = "https://chatgpt.com/";
                   }
                   {
                     name = "Jitsi Meet";
