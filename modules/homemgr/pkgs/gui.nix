@@ -30,7 +30,6 @@
 
         # media and virtualisation
         spotify
-        virtualboxKvm
         lxqt.pavucontrol-qt
         kdePackages.kolourpaint
       ];
