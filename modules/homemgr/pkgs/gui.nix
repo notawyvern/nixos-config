@@ -13,7 +13,18 @@
     };
 
   flake.homeModules.guiapps =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      ruffle-gl = pkgs.writeShellScriptBin "ruffle" ''
+        export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [ pkgs.libGL ]}:$LD_LIBRARY_PATH
+        exec ${pkgs.ruffle}/bin/ruffle "$@"
+      '';
+    in
     {
       # non-configured apps
 
@@ -29,14 +40,42 @@
         qalculate-qt
 
         # media and virtualisation
+        ruffle-gl
         spotify
         lxqt.pavucontrol-qt
         kdePackages.kolourpaint
       ];
 
+      xdg.desktopEntries.ruffle = {
+        # wraps ruffle for opengl support
+        exec = "${ruffle-gl}/bin/ruffle";
+        name = "Ruffle";
+      };
+
       # configured apps
 
       xdg.configFile = {
+        ruffle = {
+          target = "ruffle/bookmarks.toml";
+          force = true;
+          text = ''
+            [[bookmark]]
+            url = "https://aq.battleon.com/game/flash/Lore4652.swf"
+            name = "AdventureQuest"
+
+            [[bookmark]]
+            url = "https://game.aq.com/game/gamefiles/Loader3.swf"
+            name = "AQWorlds"
+
+            [[bookmark]]
+            url = "https://play.dragonfable.com/game/DFLoader.swf"
+            name = "DragonFable"
+
+            [[bookmark]]
+            url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf"
+            name = "MechQuest"
+          '';
+        };
         featherpad = {
           target = "featherpad/fp.conf";
           force = true;

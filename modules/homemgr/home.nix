@@ -18,7 +18,6 @@
             home
             mangowc
             mango-core
-            flatpak
             cliapps
             guiapps
             zenbrowser

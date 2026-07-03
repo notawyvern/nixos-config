@@ -54,7 +54,6 @@ It is a personal project. While scopes are reproducible, my needs weigh more. Ho
 │       │   └── mango.nix
 │       └── pkgs
 │           ├── cli.nix
-│           ├── flatpak.nix
 │           ├── gui.nix
 │           └── zen-browser.nix
 └── README.md
@@ -89,7 +88,7 @@ The directory [pkgs](./modules/homemgr/pkgs) contain mostly software I find non-
 * **FUN**
     - FreeTube
     - Spotify
-    - Ruffle through [nix-flatpak](https://github.com/gmodena/nix-flatpak)
+    - Ruffle
 
 * **GENERAL**
     - mpv (uosc gui)
