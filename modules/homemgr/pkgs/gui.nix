@@ -54,56 +54,63 @@
 
       # configured apps
 
-      xdg.configFile = {
-        ruffle = {
-          target = "ruffle/bookmarks.toml";
-          force = true;
-          text = ''
-            [[bookmark]]
-            url = "https://aq.battleon.com/game/flash/Lore4652.swf"
-            name = "AdventureQuest"
+      xdg.configFile =
+        let
+          toml = pkgs.formats.toml { };
+        in
+        {
+          ruffle = {
+            target = "ruffle/bookmarks.toml";
+            force = true;
+            source = toml.generate "flash-projector.toml" {
+              bookmark = [
+                {
+                  url = "https://aq.battleon.com/game/flash/Lore4652.swf";
+                  name = "AdventureQuest";
+                }
 
-            [[bookmark]]
-            url = "https://game.aq.com/game/gamefiles/Loader3.swf"
-            name = "AQWorlds"
+                {
+                  url = "https://game.aq.com/game/gamefiles/Loader3.swf";
+                  name = "AQWorlds";
+                }
 
-            [[bookmark]]
-            url = "https://play.dragonfable.com/game/DFLoader.swf"
-            name = "DragonFable"
+                {
+                  url = "https://play.dragonfable.com/game/DFLoader.swf";
+                  name = "DragonFable";
+                }
 
-            [[bookmark]]
-            url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf"
-            name = "MechQuest"
-          '';
+                {
+                  url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf";
+                  name = "MechQuest";
+                }
+              ];
+            };
+          };
+          featherpad = {
+            target = "featherpad/fp.conf";
+            force = true;
+            source = toml.generate "text-editor.toml" {
+              text.darkColorScheme = config.stylix.polarity == "dark";
+            };
+          };
+          qpdfview = {
+            target = "qpdfview/qpdfview.conf";
+            force = true;
+            source = toml.generate "pdfviewer.toml" {
+              mainWindow.restorePerFileSettings = true;
+            };
+          };
+          pcmanfm-qt = {
+            target = "pcmanfm-qt/default/settings.conf";
+            force = true;
+            source = toml.generate "file-manager.toml" {
+              System = {
+                Archiver = "lxqt-archiver";
+                Terminal = "alacritty";
+              };
+            };
+          };
         };
-        featherpad = {
-          target = "featherpad/fp.conf";
-          force = true;
-          text =
-            with config.stylix;
-            if (polarity == "dark") then
-              "[text]" + "\n" + "darkColorScheme = true"
-            else
-              "[text]" + "\n" + "darkColorScheme = false";
-        };
-        qpdfview = {
-          target = "qpdfview/qpdfview.conf";
-          force = true;
-          text = ''
-            [mainWindow]
-            restorePerFileSettings=true
-          '';
-        };
-        pcmanfm-qt = {
-          target = "pcmanfm-qt/default/settings.conf";
-          force = true;
-          text = ''
-            [System]
-            Archiver=lxqt-archiver
-            Terminal=alacritty
-          '';
-        };
-      };
 
       programs.mpv = {
         enable = true;
