@@ -62,7 +62,7 @@
           ruffle = {
             target = "ruffle/bookmarks.toml";
             force = true;
-            source = toml.generate "flash-projector.toml" {
+            source = toml.generate "bookmarks.toml" {
               bookmark = [
                 {
                   url = "https://aq.battleon.com/game/flash/Lore4652.swf";
@@ -89,21 +89,21 @@
           featherpad = {
             target = "featherpad/fp.conf";
             force = true;
-            source = toml.generate "text-editor.toml" {
+            source = toml.generate "fp.conf" {
               text.darkColorScheme = config.stylix.polarity == "dark";
             };
           };
           qpdfview = {
             target = "qpdfview/qpdfview.conf";
             force = true;
-            source = toml.generate "pdfviewer.toml" {
+            source = toml.generate "qpdfview.conf" {
               mainWindow.restorePerFileSettings = true;
             };
           };
           pcmanfm-qt = {
             target = "pcmanfm-qt/default/settings.conf";
             force = true;
-            source = toml.generate "file-manager.toml" {
+            source = toml.generate "settings.conf" {
               System = {
                 Archiver = "lxqt-archiver";
                 Terminal = "alacritty";
@@ -172,6 +172,11 @@
         enable = true;
         package = pkgs.vscodium;
         mutableExtensionsDir = false;
+        argvSettings = {
+          locale = "pt-br";
+          password-store = "basic"; # to keep login credentials
+          enable-crash-reporter = false; # hides error expecting writable argv.json
+        };
         profiles.default = {
           extensions = with pkgs.vscode-extensions; [
             vscodevim.vim

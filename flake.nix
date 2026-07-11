@@ -23,7 +23,7 @@
     stylix.url = "github:nix-community/stylix/release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/general/rose-garden.jpg";
+    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/spiritual/angel-with-a-bow.jpg";
     wallpaper.flake = false;
   };
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
