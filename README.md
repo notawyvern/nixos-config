@@ -1,30 +1,31 @@
 # ❄️ NixOS Config
 
-*Anybody is free to use, modify or look into the code!*
+*A self-indulgent configuration made with careful attention.*
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Screenshots](#screenshots)
 - [Tree](#Tree)
-    - [Structure](#structure)
-- [Installed Software](#installed-software)
-- [Shortcut Cheatsheet](#shortcut-cheatsheet)
-- [Wallpapers](#wallpapers)
-- [Screenshoots](#screenshoots)
+- [Deploying](#deploying)
+- [Cheatsheet](#cheatsheet)
+    - [Shortcuts](#shortcuts)
+    - [Software](#software)
+    - [Wallpapers](#wallpapers)
 
 ## Introduction
 
->[!CAUTION]
-> This configuration is highly opinionated and very unstable. You may adopt it, but it is wiser to study or copy parts of it only.
+>[!WARNING]
+> This configuration is opinionated and prone to change. The documentation is meant for my future self and not to be accessible. You may adopt it, but it’s wiser to study or copy only parts of it.
 
-It is a personal project. While scopes are reproducible, my needs weigh more. However, it is good to read as a fellow NixOS user. Then you won't bother with problems already solved.
+It is a quite personal project. Feel free to take a look or do what you need with it. By reading thoroughly, you won't bother with problems already solved.
+
+## Screenshots
+
+![Screenshot](assets/mango-desk.jpg)
+
+![Screenshot](assets/zenbrowser.jpg)
 
 ## Tree
-
->[!IMPORTANT]
->There is no hardware configuration by design; remember to [generate it](https://wiki.nixos.org/wiki/Nixos-generate-config). 
-
->[!IMPORTANT]
->Currently, Limine secure boot is not fully declarative on NixOS. The [wiki page](https://wiki.nixos.org/wiki/Limine#Secure_Boot) can help you enable it.
 
 ```bash
 .
@@ -33,6 +34,7 @@ It is a personal project. While scopes are reproducible, my needs weigh more. Ho
 │   └── zenbrowser.jpg
 ├── flake.lock
 ├── flake.nix
+├── install.sh
 ├── LICENSE
 ├── modules
 │   ├── core
@@ -41,41 +43,73 @@ It is a personal project. While scopes are reproducible, my needs weigh more. Ho
 │   │   ├── locale.nix
 │   │   ├── network.nix
 │   │   ├── pkgmgr.nix
-│   │   ├── sourcing.nix
 │   │   ├── swap.nix
 │   │   └── users.nix
 │   ├── global
 │   │   ├── loginmgr.nix
 │   │   └── stylix.nix
-│   └── homemgr
-│       ├── home.nix
-│       ├── mangowc
-│       │   ├── mango-core.nix
-│       │   └── mango.nix
-│       └── pkgs
-│           ├── cli.nix
-│           ├── gui.nix
-│           └── zen-browser.nix
+│   ├── homemgr
+│   │   ├── home.nix
+│   │   ├── mangowc
+│   │   │   ├── mango-core.nix
+│   │   │   └── mango.nix
+│   │   └── pkgs
+│   │       ├── cli.nix
+│   │       ├── gui.nix
+│   │       └── zen-browser.nix
+│   └── hosts
+│       └── nixos
+│           ├── configuration.nix
+│           ├── disko.nix
+│           └── hardware.nix
 └── README.md
 ```
-
-### Structure:
 
 The configuration implements the dendritic pattern. Files can be freely moved in [modules](./modules/) without consequences.
 
 In [core](./modules/core/) are features for a usable NixOS. User crh is declared but mutable. Brazilian Portuguese is enforced. 
 
-From within *core*, [sourcing.nix](./modules/core/sourcing.nix) file declares systems and all modules directly, except for Home Manager's ones.
-
 The [global](./modules/global/) path locates extras. [loginmgr.nix](./modules/global/loginmgr.nix) partly references stylix, so better both be enabled.
 
-At [homemgr](./modules/homemgr/) lots of heavily tweaked software are installed. It is needed for a GUI session and a must for a desktop PC. The main file [home.nix](./modules/homemgr/home.nix) sources its modules and configures xdg.
+At [homemgr](./modules/homemgr/) lots of heavily tweaked software is installed. It is needed for a GUI session and a must for a desktop PC. The main file [home.nix](./modules/homemgr/home.nix) sources its modules and configures xdg.
 
-## Installed Software
+## Deploying
 
-The majority of the packages are declared in [homemgr](./modules/homemgr) and [global](./modules/global). Cherry picking them might save some bandwidth and time when rebuilding NixOS.
+> [!CAUTION]
+> The script assumes internet access, GPT partition support, the firmware setup mode, the x86_64 architecture, and a */dev/sda* drive. Follow the conditions, else your drive may be wiped without an OS.
 
-The directory [pkgs](./modules/homemgr/pkgs) contain mostly software I find non-essential. Though it still has a few important ones. Most of them if not all follow:
+Clone the repository and run [install.sh](./install.sh) as root to install NixOS through a bootable image. The default password for "crh" is **ilovenix**. It is highly recommended to change it with *passwd crh*.
+
+## Cheatsheet
+
+### Shortcuts
+
+>[!NOTE]
+>Click the waybar icons to configure network or audio through GUI.
+
+The Windows or the Super key is used as Mod (modifier). The following shortcuts are the most important.
+
+- **Arrow keys**: press during boot to select generations
+- **Mod+b**: opens browser
+- **Mod+w**: launches tofi menu (an app chooser alternative to dmenu)
+- **Mod+t**: opens the alacritty terminal
+- **Mod+q**: closes the currently focused window
+- **Mod+number**: changes the workspace
+- **Ctrl+Alt+Space**: quits mangowc back to gtkgreet
+- **Mod+Shift+u**: powers off
+- **Mod+Shift+r**: reboots
+
+### Software
+
+- **Bootloader**: Limine
+- **Wayland Compositor**: mangowm
+- **Login Manager**: gtkgreet
+- **Browser**: Zen Browser
+
+**Most programs follow:**
+
+> [!NOTE]
+> These are the installed ones as of the time of writing and might be subject to change due to time and preferences.
 
 * **IT**
     - VSCodium
@@ -102,29 +136,6 @@ The directory [pkgs](./modules/homemgr/pkgs) contain mostly software I find non-
     - qpdfview
     - swayimg to view images
 
->[!NOTE]
->Click the waybar icons to configure network or audio through GUI.
+### Wallpapers
 
-## Shortcut Cheatsheet
-
-The Windows or the Super key is used as Mod (modifier). The following keys are the most important.
-
-- **Arrow keys**: press during boot to select generations
-- **Mod+b**: opens browser
-- **Mod+w**: launches tofi menu (an app chooser alternative to dmenu)
-- **Mod+t**: opens the alacritty terminal
-- **Mod+q**: closes the currently focused window
-- **Mod+number**: changes the workspace
-- **Ctrl+Alt+Space**: quits mangowc back to gtkgreet
-- **Mod+Shift+u**: powers off
-- **Mod+Shift+r**: reboots
-
-## Wallpapers
-
-[flake.nix](./flake.nix) references one. Just change the line. The line fetches an image from my wallpaper repo to the /nix/store. If you're interested in it, [take a look](https://github.com/notawyvern/wallpapers).
-
-## Screenshoots
-
-![Screenshot](assets/mango-desk.jpg)
-
-![Screenshot](assets/zenbrowser.jpg)
+[flake.nix](./flake.nix) references one. Change the source image to replace it. The line fetches a single image from my [wallpaper repo](https://github.com/notawyvern/wallpapers) to the /nix/store.

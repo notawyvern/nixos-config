@@ -3,14 +3,21 @@
   imports = [
     inputs.home-manager.flakeModules.home-manager
   ];
+
   systems = [ "x86_64-linux" ];
+
+  flake.nixosConfigurations.partitioning = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.partitioning
+    ];
+  };
+
   flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      "${self.outPath}/hardware-configuration.nix"
-
       inputs.flake-parts.flakeModules.flakeModules
 
       # core modules
+      self.nixosModules.hardware-nixos
       self.nixosModules.audio
       self.nixosModules.boot
       self.nixosModules.locale
