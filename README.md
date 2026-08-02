@@ -65,49 +65,10 @@ At [homemgr](./modules/homemgr/) lots of heavily tweaked software are installed.
 
 ## Deploying
 
-This section assumes you installed NixOS with a user named "crh" and is in the firmware's setup mode. /dev/sda1 and /dev/sda2 are device-specific, so check your paths. Run these as the root user through the live image.
+> [!IMPORTANT]
+> The script assumes you installed NixOS with a user called "crh", is in the firmware's setup mode, and let Calamares handle partitioning. Run it through the live image.
 
-* Enter the environment:
-```sh
-sudo -i
-mount /dev/sda2 /mnt/ &&
-mkdir -p /mnt/boot &&
-mount /dev/sda1 /mnt/boot &&
-nixos-enter
-```
-
-* Prepare the system for Limine:
-```sh
-# A temporarily unbootable system, so Limine
-# will not conflict with GRUB or systemd-boot.
-rm -rf /boot/*
-```
-* Clone the configuration:
-```sh
-nix-shell -p sbctl efibootmgr git
-git clone https://github.com/notawyvern/nixos-config &&
-cp -r nixos-config/modules nixos-config/flake.* /etc/nixos/ &&
-rm -rf nixos-config && rm /etc/nixos/configuration.nix
-```
-
-*Optionally check for efi variables to delete through efibootmgr.*
-
-* Imperatively configure Secure Boot:
-```sh
-sbctl create-keys && sbctl enroll-keys -m -f && exit
-```
-
-* Remove junk files or skip it:
-```sh
-# pure flakes doesn't need any of it.
-nix-channel --remove nixos &&
-rm -rf /nix/var/nix/profiles/per-user/root /root/.nix-defexpr/channels
-```
-
-* Complete the deployment:
-```sh
-nixos-rebuild boot
-```
+[setup.sh](./setup.sh) should be run after installing NixOS through the GUI of GNOME or KDE. Some steps are preferred and others are a must. For example, sbctl is needed for Secure Boot. You should know which is which before changing it.
 
 ## Installed Software
 
