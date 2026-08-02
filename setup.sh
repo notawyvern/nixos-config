@@ -35,7 +35,7 @@ rm -rf /boot/*
 # Configuration cloning and cleanup
 nix-shell -p sbctl efibootmgr git --run bash << 'SHELL_EOF'
 set -e
-git clone https://github.com/notawyvern/nixos-config
+git clone -b update_flake_lock_action https://github.com/notawyvern/nixos-config.git
 cp -r nixos-config/modules nixos-config/flake.* /etc/nixos/
 rm -rf nixos-config
 rm /etc/nixos/configuration.nix
