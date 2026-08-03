@@ -17,5 +17,5 @@ jobs:
         uses: DeterminateSystems/update-flake-lock@main
         with:
           token: ${{ secrets.UPDATE_LOCK }}
-      - name: Commit to repository
-        uses: stefanzweifel/git-auto-commit-action@v7.2.0
+#      - name: Commit to repository
+#        uses: stefanzweifel/git-auto-commit-action@v7.2.0
