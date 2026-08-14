@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:denful/import-tree";
@@ -17,7 +18,7 @@
     mango.inputs.nixpkgs.follows = "nixpkgs";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs-unstable";
     zen-browser.inputs.home-manager.follows = "home-manager";
 
     nur.url = "github:nix-community/NUR";
@@ -26,7 +27,7 @@
     stylix.url = "github:nix-community/stylix/release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/spiritual/angel-with-a-bow.jpg";
+    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/fantasy/magical-land-japan.jpg";
     wallpaper.flake = false;
   };
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

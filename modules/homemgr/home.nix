@@ -60,8 +60,7 @@
         desktopEntries = {
           htop = {
             name = "Htop";
-            exec = with pkgs; "${alacritty}/bin/alacritty -e ${htop}/bin/htop";
-            terminal = false;
+            noDisplay = true;
           };
           vim = {
             name = "Vim";

@@ -10,6 +10,11 @@
         base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
         image = inputs.wallpaper;
         polarity = "dark";
+        opacity = {
+          desktop = 0.5;
+          terminal = 0.8;
+          popups = 0.9;
+        };
         icons = {
           enable = true;
           dark = "breeze-dark";

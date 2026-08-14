@@ -38,12 +38,11 @@
         featherpad
         qpdfview
         qalculate-qt
+        lxtask
 
         # media and virtualisation
         ruffle-gl
-        spotify
         lxqt.pavucontrol-qt
-        kdePackages.kolourpaint
       ];
 
       xdg.desktopEntries.ruffle = {

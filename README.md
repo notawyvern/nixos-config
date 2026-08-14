@@ -4,7 +4,6 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [Screenshots](#screenshots)
 - [Tree](#Tree)
 - [Deploying](#deploying)
 - [Cheatsheet](#cheatsheet)
@@ -12,18 +11,11 @@
     - [Software](#software)
     - [Wallpapers](#wallpapers)
 
+https://github.com/user-attachments/assets/d02b4a61-11b9-4687-b84d-002247ab717e
+
 ## Introduction
 
->[!WARNING]
-> This configuration is opinionated and prone to change. The documentation is meant for my future self and not to be accessible. You may adopt it, but it’s wiser to study or copy only parts of it.
-
-It is a quite personal project. Feel free to take a look or do what you need with it. By reading thoroughly, you won't bother with problems already solved.
-
-## Screenshots
-
-![Screenshot](assets/mango-desk.jpg)
-
-![Screenshot](assets/zenbrowser.jpg)
+This configuration is opinionated and can change. The documentation is meant for my future self and not to be accessible. Adopt it if you will, but it’s wiser to only study or replicate parts.
 
 ## Tree
 
@@ -56,6 +48,7 @@ It is a quite personal project. Feel free to take a look or do what you need wit
 │   │   └── pkgs
 │   │       ├── cli.nix
 │   │       ├── gui.nix
+│   │       ├── webapps.nix
 │   │       └── zen-browser.nix
 │   └── hosts
 │       └── nixos
@@ -65,7 +58,7 @@ It is a quite personal project. Feel free to take a look or do what you need wit
 └── README.md
 ```
 
-The configuration implements the dendritic pattern. Files can be freely moved in [modules](./modules/) without consequences.
+The NixOS config implements the dendritic pattern. Files can be freely moved in [modules](./modules/) without consequences.
 
 In [core](./modules/core/) are features for a usable NixOS. User crh is declared but mutable. Brazilian Portuguese is enforced. 
 
@@ -73,12 +66,16 @@ The [global](./modules/global/) path locates extras. [loginmgr.nix](./modules/gl
 
 At [homemgr](./modules/homemgr/) lots of heavily tweaked software is installed. It is needed for a GUI session and a must for a desktop PC. The main file [home.nix](./modules/homemgr/home.nix) sources its modules and configures xdg.
 
+The [webapps](./modules/homemgr/pkgs/webapps.nix) rely on the Zen browser *webapps* profile, not on specialized modules. This is for uBlock Origin, as normal PWAs lack configurability.
+
 ## Deploying
 
 > [!CAUTION]
-> The script assumes internet access, GPT partition support, the firmware setup mode, the x86_64 architecture, and a */dev/sda* drive. Follow the conditions, else your drive may be wiped without an OS.
+> The script assumes internet access, GPT partition support, the firmware setup mode, and the x86_64 architecture. Follow the conditions, else your drive may be wiped without an OS.
 
-Clone the repository and run [install.sh](./install.sh) as root to install NixOS through a bootable image. The default password for "crh" is **ilovenix**. It is highly recommended to change it with *passwd crh*.
+1. Clone the repository and replace **"/dev/sda"** on [disko.nix](./modules/hosts/nixos/disko.nix) with your device. 
+2. Run [install.sh](./install.sh) as root through a bootable image or NixOS installation. 
+3. Change the temporary password for "crh", **ilovenix**, with your own.
 
 ## Cheatsheet
 
@@ -91,7 +88,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 
 - **Arrow keys**: press during boot to select generations
 - **Mod+b**: opens browser
-- **Mod+w**: launches tofi menu (an app chooser alternative to dmenu)
+- **Mod+w**: launches the tofi launcher
 - **Mod+t**: opens the alacritty terminal
 - **Mod+q**: closes the currently focused window
 - **Mod+number**: changes the workspace
@@ -104,7 +101,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 - **Bootloader**: Limine
 - **Wayland Compositor**: mangowm
 - **Login Manager**: gtkgreet
-- **Browser**: Zen Browser
+- **Browser**: Zen Browser, uBO configured
 
 **Most programs follow:**
 
@@ -116,25 +113,30 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
     - git
     - Alacritty as a terminal emulator
     - Vim
-    - htop
     - fish (as in Home Manager)
 
 * **FUN**
     - FreeTube
-    - Spotify
     - Ruffle
 
 * **GENERAL**
     - mpv (uosc gui)
     - fastfetch
-    - KolourPaint
     - Zen Browser
-    - Qalculate!'s GTK version
+    - Qalculate! GTK
     - featherpad
     - pcmanfm-qt
     - lxqt-archiver
+    - lxtask
     - qpdfview
     - swayimg to view images
+
+* **WEBAPPS**
+    - Photopea
+    - Spotify
+    - ChatGPT
+    - Proton Mail
+    - Koofr Drive
 
 ### Wallpapers
 

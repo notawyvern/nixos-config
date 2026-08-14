@@ -2,7 +2,7 @@
 
 {
   flake.homeModules.mango-core =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       # menu to run programs
       programs.tofi = {
@@ -12,6 +12,12 @@
           prompt-text = ''" "'';
           hide-cursor = true;
           drun-launch = true;
+
+          # fullscreen mode
+          width = "100%";
+          height = "100%";
+          border-width = 0;
+          outline-width = 0;
         };
       };
 
@@ -20,6 +26,7 @@
         settings.bar = {
           layer = "top";
           position = "top";
+          margin = "9 9 0 9";
 
           modules-left = [ "ext/workspaces" ];
           modules-center = [ "clock" ];
@@ -63,6 +70,11 @@
             on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           };
         };
+        style = ''
+          window#waybar {
+          border-radius: 8px;
+          }
+        '';
       };
     };
 }

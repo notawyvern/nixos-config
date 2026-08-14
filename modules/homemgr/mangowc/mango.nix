@@ -18,6 +18,11 @@
           focused_opacity = "1.0";
           unfocused_opacity = "1.0";
 
+          # Blur
+          blur = 1;
+          blur_layer = 1; # for panels and similar
+          blur_optimized = 1; # cacheing
+
           # Animation Configuration(support type:zoom,slide)
           # tag_animation_direction: 1-horizontal,0-vertical
           animations = 1;

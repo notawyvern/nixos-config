@@ -117,14 +117,6 @@
                     url = "https://github.com/";
                   }
                   {
-                    name = "Koofr Drive";
-                    url = "https://app.koofr.net/";
-                  }
-                  {
-                    name = "Proton Mail";
-                    url = "https://account.proton.me/mail";
-                  }
-                  {
                     name = "SimpleLogin";
                     url = "https://app.simplelogin.io/auth/login";
                   }
@@ -169,20 +161,12 @@
                 toolbar = true;
                 bookmarks = [
                   {
-                    name = "AI Chat";
-                    url = "https://duck.ai/?q=DuckDuckGo&ia=chat";
-                  }
-                  {
                     name = "Anna’s Archive";
                     url = "https://annas-archive.gl/";
                   }
                   {
                     name = "ArchWiki";
                     url = "https://wiki.archlinux.org/";
-                  }
-                  {
-                    name = "ChatGPT";
-                    url = "https://chatgpt.com/";
                   }
                   {
                     name = "Jitsi Meet";
@@ -206,6 +190,9 @@
           };
         };
       };
-      stylix.targets.zen-browser.profileNames = [ "default" ];
+      stylix.targets.zen-browser.profileNames = [
+        "default"
+        "webapps"
+      ];
     };
 }
