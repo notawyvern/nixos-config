@@ -4,7 +4,7 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [Tree](#Tree)
+- [Tree](#tree)
 - [Deploying](#deploying)
 - [Cheatsheet](#cheatsheet)
     - [Shortcuts](#shortcuts)
@@ -73,9 +73,9 @@ The [webapps](./modules/homemgr/pkgs/webapps.nix) rely on the Zen browser *webap
 > [!CAUTION]
 > The script assumes internet access, GPT partition support, the firmware setup mode, and the x86_64 architecture. Follow the conditions, else your drive may be wiped without an OS.
 
-1. Clone the repository and replace **"/dev/sda"** on [disko.nix](./modules/hosts/nixos/disko.nix) with your device. 
+1. Clone the repository and replace **device = "/dev/devname";** on [disko.nix](./modules/hosts/nixos/disko.nix) with yours. 
 2. Run [install.sh](./install.sh) as root through a bootable image or NixOS installation. 
-3. Change the temporary password for "crh", **ilovenix**, with your own.
+3. Set the password for "crh" when prompted.
 
 ## Cheatsheet
 

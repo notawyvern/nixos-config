@@ -40,6 +40,7 @@ cp -r "$SCRIPT_DIR"/flake.nix \
       "$SCRIPT_DIR"/modules \
       /mnt/etc/nixos/
 
+nixos-enter --root /mnt -c 'passwd crh'
 nixos-enter <<'CHROOT_EOF'
 set -euo pipefail
 
