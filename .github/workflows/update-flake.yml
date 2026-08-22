@@ -2,7 +2,7 @@ name: Update flake.lock
 
 on:
   schedule:
-    - cron: "0 0 * * 6" # every saturday
+    - cron: "0 0 * * 3,6" # wednesday and saturday
   workflow_dispatch: # allows manual triggering
 
 permissions:
@@ -17,9 +17,11 @@ jobs:
 
       - uses: DeterminateSystems/determinate-nix-action@v3.21.9
 
-      # using that instead of update-flake-lock
-      # avoids making a pull request
-      - run: nix flake update
+      - name: Update flake
+        run: nix flake update
+
+      - name: Validate configuration
+        run: nix flake check
 
       - name: Commit changes
         run: |

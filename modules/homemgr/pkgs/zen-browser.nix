@@ -116,10 +116,6 @@
                     name = "GitHub";
                     url = "https://github.com/";
                   }
-                  {
-                    name = "SimpleLogin";
-                    url = "https://app.simplelogin.io/auth/login";
-                  }
                 ];
               }
               {

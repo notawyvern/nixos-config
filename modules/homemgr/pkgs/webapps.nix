@@ -132,10 +132,6 @@
             hash = "sha256-MnCZdi0rIg/dWKYYjnrQ8h9ddPPBxlzYz5dYLAQVgeU=";
           };
         };
-        /*
-          log in with the password to keep spotify
-          credentials. this issue is server-side.
-        */
         spotify = {
           name = "Spotify";
           exec = "${webapp-run} https://open.spotify.com/";

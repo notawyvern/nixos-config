@@ -6,12 +6,6 @@
 
   systems = [ "x86_64-linux" ];
 
-  flake.nixosConfigurations.partitioning = inputs.nixpkgs.lib.nixosSystem {
-    modules = [
-      self.nixosModules.partitioning
-    ];
-  };
-
   flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
     modules = [
       inputs.flake-parts.flakeModules.flakeModules

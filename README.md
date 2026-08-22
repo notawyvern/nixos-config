@@ -5,7 +5,9 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Tree](#tree)
-- [Deploying](#deploying)
+- [Installer](#installer)
+    - [Needs](#needs)
+    - [Usage](#usage)
 - [Cheatsheet](#cheatsheet)
     - [Shortcuts](#shortcuts)
     - [Software](#software)
@@ -52,8 +54,8 @@ This configuration is opinionated and can change. The documentation is meant for
 │   │       └── zen-browser.nix
 │   └── hosts
 │       └── nixos
+│           ├── _disko.nix
 │           ├── configuration.nix
-│           ├── disko.nix
 │           └── hardware.nix
 └── README.md
 ```
@@ -68,14 +70,27 @@ At [homemgr](./modules/homemgr/) lots of heavily tweaked software is installed. 
 
 The [webapps](./modules/homemgr/pkgs/webapps.nix) rely on the Zen browser *webapps* profile, not on specialized modules. This is for uBlock Origin, as normal PWAs lack configurability.
 
-## Deploying
+## Installer
+
+### Needs
 
 > [!CAUTION]
-> The script assumes internet access, GPT partition support, the firmware setup mode, and the x86_64 architecture. Follow the conditions, else your drive may be wiped without an OS.
+> Follow these, else your drive may be wiped without an OS.
 
-1. Clone the repository and replace **device = "/dev/devname";** on [disko.nix](./modules/hosts/nixos/disko.nix) with yours. 
-2. Run [install.sh](./install.sh) as root through a bootable image or NixOS installation. 
-3. Set the password for "crh" when prompted.
+- Internet access
+- GPT partitioning support
+- UEFI setup mode
+- x86_64 architecture
+- Executing on a NixOS install or bootable image
+
+### Usage
+
+Run this one-liner and answer prompts when asked:
+
+```bash
+git clone https://github.com/notawyvern/nixos-config &&
+sudo bash nixos-config/install.sh
+```
 
 ## Cheatsheet
 

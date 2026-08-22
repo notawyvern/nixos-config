@@ -24,6 +24,24 @@
         };
       };
 
+      # Auto upgrade
+      system.autoUpgrade = {
+        enable = true;
+        flake = "github:notawyvern/nixos-config";
+        operation = "boot";
+        randomizedDelaySec = "30min";
+      };
+
+      /*
+        avoids an indefinite number of
+        generations due to auto updating
+      */
+      nix.gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
+
       # Pinned stateful data for compatibility;
       # doesn't determine version of packages.
       #

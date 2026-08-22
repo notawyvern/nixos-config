@@ -20,9 +20,11 @@
       ...
     }:
     let
+      system = pkgs.stdenv.hostPlatform.system;
+      pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
       ruffle-gl = pkgs.writeShellScriptBin "ruffle" ''
         export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [ pkgs.libGL ]}:$LD_LIBRARY_PATH
-        exec ${pkgs.ruffle}/bin/ruffle "$@"
+        exec ${pkgs-unstable.ruffle}/bin/ruffle "$@"
       '';
     in
     {
@@ -148,6 +150,7 @@
 
       programs.freetube = {
         enable = true;
+        package = pkgs-unstable.freetube; # faster fixes for breakages
         settings = {
           autoplayVideos = false;
           hideHeaderLogo = true;

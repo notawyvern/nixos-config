@@ -9,21 +9,26 @@ fi
 
 echo "NixOS Install Script"
 echo "===================="
+echo List of device paths:
+lsblk -dpno PATH
+echo "========================================="
+read -rp "Enter your disk e.g. /dev/vda: " DISK
 echo
 echo "WARNING: The disk will be COMPLETELY ERASED,"
 echo "repartitioned, and NixOS will be deployed."
 read -rp "Continue? (y/N) " -n 1 -r
-echo
+
 [[ $REPLY =~ ^[Yy]$ ]] || exit 1
 
 export SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export DISKO_CONF="$SCRIPT_DIR/modules/hosts/nixos/_disko.nix"
 export NIX_CONFIG="experimental-features = nix-command flakes"
 
 # Partition, format, and mount the system using Disko.
 nix run github:nix-community/disko/v1.13.0 -- \
     --yes-wipe-all-disks \
-    --mode destroy,format,mount \
-    --flake "$SCRIPT_DIR"#partitioning
+    --argstr drive $DISK \
+    --mode destroy,format,mount $DISKO_CONF
 
 # Install the bootloader later 
 # not to conflict with Secure Boot
@@ -40,7 +45,6 @@ cp -r "$SCRIPT_DIR"/flake.nix \
       "$SCRIPT_DIR"/modules \
       /mnt/etc/nixos/
 
-nixos-enter --root /mnt -c 'passwd crh'
 nixos-enter <<'CHROOT_EOF'
 set -euo pipefail
 
@@ -50,7 +54,13 @@ nix run nixpkgs#sbctl -- enroll-keys -m -f
 
 # Installs Limine
 nixos-rebuild boot
+
 CHROOT_EOF
+
+echo
+echo "Set up credentials for crh:"
+echo "==========================="
+nixos-enter --root /mnt -c 'passwd crh'
 
 echo
 echo "Installation complete!"
