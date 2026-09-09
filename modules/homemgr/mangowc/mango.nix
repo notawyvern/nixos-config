@@ -7,10 +7,16 @@
 {
   flake.homeModules.mangowc =
     { pkgs, config, ... }:
+    let
+      system = pkgs.stdenv.hostPlatform.system;
+      zen-browser = inputs.zen-browser.packages.${system}.default;
+      pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+    in
     {
       imports = [ inputs.mango.hmModules.mango ];
       wayland.windowManager.mango = {
         enable = true;
+        package = pkgs-unstable.mango;
         settings = {
           # Window effect
           border_radius = 6;
@@ -109,68 +115,63 @@
             "id:9,layout_name:tile"
           ];
 
-          bind =
-            let
-              system = pkgs.stdenv.hostPlatform.system;
-              zen-browser = inputs.zen-browser.packages.${system}.default;
-            in
-            [
-              # launchers
-              "SUPER,w,spawn,${pkgs.tofi}/bin/tofi-drun"
-              "SUPER,t,spawn,${pkgs.alacritty}/bin/alacritty"
-              "SUPER,b,spawn,${zen-browser}/bin/zen-beta"
-              "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c --encoding jpg"
+          bind = [
+            # launchers
+            "SUPER,w,spawn,${pkgs.tofi}/bin/tofi-drun"
+            "SUPER,t,spawn,${pkgs.alacritty}/bin/alacritty"
+            "SUPER,b,spawn,${zen-browser}/bin/zen-beta"
+            "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c --encoding jpg"
 
-              # power
-              "SUPER+Shift,u,spawn,${pkgs.systemd}/bin/systemctl poweroff"
-              "SUPER+Shift,r,spawn,${pkgs.systemd}/bin/systemctl reboot"
+            # power
+            "SUPER+Shift,u,spawn,${pkgs.systemd}/bin/systemctl poweroff"
+            "SUPER+Shift,r,spawn,${pkgs.systemd}/bin/systemctl reboot"
 
-              # exit
-              "ctrl+alt,space,quit"
-              "SUPER,q,killclient,"
+            # exit
+            "ctrl+alt,space,quit"
+            "SUPER,q,killclient,"
 
-              # switch window focus
-              "SUPER,h,focusdir,left"
-              "SUPER,j,focusdir,down"
-              "SUPER,k,focusdir,up"
-              "SUPER,l,focusdir,right"
+            # switch window focus
+            "SUPER,h,focusdir,left"
+            "SUPER,j,focusdir,down"
+            "SUPER,k,focusdir,up"
+            "SUPER,l,focusdir,right"
 
-              # swap window
-              "SUPER+SHIFT,h,exchange_client,left"
-              "SUPER+SHIFT,j,exchange_client,down"
-              "SUPER+SHIFT,k,exchange_client,up"
-              "SUPER+SHIFT,l,exchange_client,right"
+            # swap window
+            "SUPER+SHIFT,h,exchange_client,left"
+            "SUPER+SHIFT,j,exchange_client,down"
+            "SUPER+SHIFT,k,exchange_client,up"
+            "SUPER+SHIFT,l,exchange_client,right"
 
-              # switch window status
-              "SUPER,f,togglefullscreen,"
+            # switch window status
+            "SUPER,f,togglefullscreen,"
 
-              # switch layout
-              "SUPER,space,switch_layout"
+            # switch layout
+            "SUPER,space,switch_layout"
 
-              # tag switch
-              "SUPER,1,view,1,0"
-              "SUPER,2,view,2,0"
-              "SUPER,3,view,3,0"
-              "SUPER,4,view,4,0"
-              "SUPER,5,view,5,0"
-              "SUPER,6,view,6,0"
-              "SUPER,7,view,7,0"
-              "SUPER,8,view,8,0"
-              "SUPER,9,view,9,0"
-              "SUPER,0,toggleoverview"
+            # tag switch
+            "SUPER,1,view,1,0"
+            "SUPER,2,view,2,0"
+            "SUPER,3,view,3,0"
+            "SUPER,4,view,4,0"
+            "SUPER,5,view,5,0"
+            "SUPER,6,view,6,0"
+            "SUPER,7,view,7,0"
+            "SUPER,8,view,8,0"
+            "SUPER,9,view,9,0"
+            "SUPER,0,toggleoverview"
 
-              # places windows in tags
-              "SUPER+shift,1,tag,1,0"
-              "SUPER+shift,2,tag,2,0"
-              "SUPER+shift,3,tag,3,0"
-              "SUPER+shift,4,tag,4,0"
-              "SUPER+shift,5,tag,5,0"
-              "SUPER+shift,6,tag,6,0"
-              "SUPER+shift,7,tag,7,0"
-              "SUPER+shift,8,tag,8,0"
-              "SUPER+shift,9,tag,9,0"
+            # places windows in tags
+            "SUPER+shift,1,tag,1,0"
+            "SUPER+shift,2,tag,2,0"
+            "SUPER+shift,3,tag,3,0"
+            "SUPER+shift,4,tag,4,0"
+            "SUPER+shift,5,tag,5,0"
+            "SUPER+shift,6,tag,6,0"
+            "SUPER+shift,7,tag,7,0"
+            "SUPER+shift,8,tag,8,0"
+            "SUPER+shift,9,tag,9,0"
 
-            ];
+          ];
 
           mousebind = [
             # Mouse Button Bindings

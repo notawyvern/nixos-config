@@ -107,7 +107,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 - **Mod+t**: opens the alacritty terminal
 - **Mod+q**: closes the currently focused window
 - **Mod+number**: changes the workspace
-- **Ctrl+Alt+Space**: quits mangowc back to gtkgreet
+- **Ctrl+Alt+Space**: quits mangowc back to Noctalia Greeter
 - **Mod+Shift+u**: powers off
 - **Mod+Shift+r**: reboots
 
@@ -115,7 +115,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 
 - **Bootloader**: Limine
 - **Wayland Compositor**: mangowm
-- **Login Manager**: gtkgreet
+- **Login Manager**: Noctalia Greeter
 - **Browser**: Zen Browser, uBO configured
 
 **Most programs follow:**
@@ -142,7 +142,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
     - featherpad
     - pcmanfm-qt
     - lxqt-archiver
-    - lxtask
+    - qps
     - qpdfview
     - swayimg to view images
 
