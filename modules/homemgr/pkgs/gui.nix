@@ -40,7 +40,7 @@
         featherpad
         qpdfview
         qalculate-qt
-        lxtask
+        lxqt.qps
 
         # media and virtualisation
         ruffle-gl
@@ -58,8 +58,16 @@
       xdg.configFile =
         let
           toml = pkgs.formats.toml { };
+          ini = pkgs.formats.ini { };
         in
         {
+          qps = {
+            target = "qps/qps.conf";
+            force = true;
+            source = ini.generate "qps.conf" {
+              General.flags = "ExitOnClose, SavePos, infobar, cpubar, loadgraph, loadicon, selectpids, tree, hostname, service";
+            };
+          };
           ruffle = {
             target = "ruffle/bookmarks.toml";
             force = true;

@@ -94,6 +94,7 @@
             "network.trr.mode" = 2; # dns over https
 
             # declutter
+            "identity.fxaccounts.enabled" = false; # no sync in ui
             "browser.shell.checkDefaultBrowser" = false;
             "privacy.userContext.enabled" = false;
             "zen.welcome-screen.seen" = true;

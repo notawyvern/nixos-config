@@ -103,42 +103,22 @@
         photopea = {
           name = "Photopea";
           exec = "${webapp-run} https://www.photopea.com/";
-          icon = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/photopea/photopea/7a3ba2e0b0f559f98129d195675a9be6dcec6e3d/logo.svg";
-            hash = "sha256-UqzvoMaMaBiQmpVKzPZJMwDI2VWeNuYmr2plaAM1b8I=";
-          };
         };
         protonmail = {
           name = "Proton Mail";
           exec = "${webapp-run} https://mail.proton.me/";
-          icon = pkgs.fetchurl {
-            url = "https://www.svgrepo.com/show/331550/protonmail.svg";
-            hash = "sha256-TT91yFKQxGPxkH5E/QWRFs/xLrZQULxkuGrMjl3EI+U=";
-          };
         };
         koofr = {
           name = "Koofr Drive";
           exec = "${webapp-run} https://app.koofr.net/app";
-          icon = pkgs.fetchurl {
-            url = "https://www.svgrepo.com/show/331458/koofr.svg";
-            hash = "sha256-emihupzSIRvvcL1PAFt9NUfqrNHNzUoPQunICRGSRm8=";
-          };
         };
         chatgpt = {
           name = "ChatGPT";
           exec = "${webapp-run} https://chatgpt.com/";
-          icon = pkgs.fetchurl {
-            url = "https://www.svgrepo.com/show/235199/chip-ai.svg";
-            hash = "sha256-MnCZdi0rIg/dWKYYjnrQ8h9ddPPBxlzYz5dYLAQVgeU=";
-          };
         };
         spotify = {
           name = "Spotify";
           exec = "${webapp-run} https://open.spotify.com/";
-          icon = pkgs.fetchurl {
-            url = "https://www.svgrepo.com/show/55272/spotify.svg";
-            hash = "sha256-fMKNoY9D/OgJK9J+HI9IN6EKWNIh8uZJDaE+MCYBX7E=";
-          };
         };
       };
     };
