@@ -3,32 +3,52 @@
   flake.nixosModules.loginmanager =
     { config, pkgs, ... }:
     let
-      gtk-theme = if (config.stylix.polarity == "dark") then ''"adw-gtk3-dark"'' else ''"adw-gtk3"'';
-      cursor = config.stylix.cursor.name;
-      cursor-size = toString config.stylix.cursor.size;
-      mango = inputs.mango.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      stylix = config.stylix;
+      stylix-colors = config.lib.stylix.colors.withHashtag;
+      system = pkgs.stdenv.hostPlatform.system;
+      pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
     in
     {
-      # the users module declares theming resources
-      users.users.greeter.packages = [
-        config.stylix.cursor.package
-        pkgs.adw-gtk3
-      ];
-      environment.etc = {
-        "greetd/environments" = {
-          text = "${mango}/bin/mango";
-        };
-      };
 
-      services.greetd = {
-        enable = true;
-        restart = true;
-        settings = {
-          default_session = {
-            command = ''
-              ${pkgs.coreutils}/bin/env GTK_THEME=${gtk-theme} XCURSOR_THEME=${cursor} XCURSOR_SIZE=${cursor-size} \
-              ${pkgs.cage}/bin/cage -s -d -- ${pkgs.gtkgreet}/bin/gtkgreet
-            '';
+      imports = with inputs; [
+        noctalia-greeter.nixosModules.default
+      ];
+
+      services.displayManager = {
+        sessionPackages = [ pkgs-unstable.mango ];
+        noctalia-greeter = {
+          enable = true;
+          package = pkgs-unstable.noctalia-greeter;
+          settings = {
+            user.default = "crh";
+            appearance = {
+              scheme = "Synced";
+              scheme_selector_position = "hidden";
+              hide_logo = true;
+              palette = with stylix-colors; {
+                primary = base0D;
+                on_primary = base00;
+                secondary = base0E;
+                on_secondary = base00;
+                tertiary = base0C;
+                on_tertiary = base00;
+                error = base08;
+                on_error = base00;
+                surface = base00;
+                on_surface = base05;
+                surface_variant = base01;
+                on_surface_variant = base04;
+                outline = base03;
+                shadow = base00;
+                hover = base0C;
+                on_hover = base00;
+              };
+            };
+            cursor = {
+              path = "${stylix.cursor.package}/share/icons";
+              theme = "${stylix.cursor.name}";
+              size = stylix.cursor.size;
+            };
           };
         };
       };

@@ -57,6 +57,7 @@
       };
 
       xdg = {
+        autostart.readOnly = true;
         desktopEntries = {
           htop = {
             name = "Htop";
