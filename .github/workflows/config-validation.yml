@@ -1,0 +1,14 @@
+name: Validate config
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: ossystems/nix-actions@v1.0.6
+        with:
+          install-nix: true
