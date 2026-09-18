@@ -1,0 +1,19 @@
+name: Validate config
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: DeterminateSystems/determinate-nix-action@v3.21.9
+
+      - name: Check flake
+        run: nix flake check
+
+      - name: Check flake inputs
+        uses: DeterminateSystems/flake-checker-action@v14
