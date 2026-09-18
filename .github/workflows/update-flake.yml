@@ -5,29 +5,14 @@ on:
     - cron: "0 0 * * 3,6" # wednesday and saturday
   workflow_dispatch: # allows manual triggering
 
-permissions:
-  contents: write
-
 jobs:
   update:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v7.0.1
-
-      - uses: DeterminateSystems/determinate-nix-action@v3.21.9
-
-      - name: Update flake
-        run: nix flake update
-
-      - name: Validate configuration
-        run: nix flake check
-
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add flake.lock
-          git diff --cached --quiet && exit 0
-          git commit -m "flake.lock regular update"
-          git push
+      - uses: ossystems/nix-actions/update-flake@v1.0.6
+        with:
+          install-nix: true
+          auto-merge: true
