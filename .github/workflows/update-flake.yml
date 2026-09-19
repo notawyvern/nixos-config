@@ -20,14 +20,13 @@ jobs:
       - name: Update flake
         run: nix flake update
 
-      - name: Validate configuration
+      - name: Check flake
         run: nix flake check
 
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add flake.lock
-          git diff --cached --quiet && exit 0
-          git commit -m "flake.lock regular update"
-          git push
+      - name: Check flake inputs
+        uses: DeterminateSystems/flake-checker-action@v14
+
+      - uses: stefanzweifel/git-auto-commit-action@v7.2.0
+        with:
+          file_pattern: flake.lock
+          commit_message: flake.lock regular update
