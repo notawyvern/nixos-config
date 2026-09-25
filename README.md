@@ -23,9 +23,6 @@ This configuration is opinionated and can change. The documentation is meant for
 
 ```bash
 .
-├── assets
-│   ├── mango-desk.jpg
-│   └── zenbrowser.jpg
 ├── flake.lock
 ├── flake.nix
 ├── install.sh
@@ -53,9 +50,13 @@ This configuration is opinionated and can change. The documentation is meant for
 │   │       ├── webapps.nix
 │   │       └── zen-browser.nix
 │   └── hosts
-│       └── nixos
-│           ├── _disko.nix
+│       ├── desktop
+│       │   ├── configuration.nix
+│       │   ├── _disko.nix
+│       │   └── hardware.nix
+│       └── laptop
 │           ├── configuration.nix
+│           ├── _disko.nix
 │           └── hardware.nix
 └── README.md
 ```

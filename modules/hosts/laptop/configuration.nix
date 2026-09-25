@@ -6,12 +6,17 @@
 
   systems = [ "x86_64-linux" ];
 
-  flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     modules = [
+
+      {
+        networking.hostName = "laptop";
+      }
+
       inputs.flake-parts.flakeModules.flakeModules
 
       # core modules
-      self.nixosModules.hardware-nixos
+      self.nixosModules.hardware-laptop
       self.nixosModules.audio
       self.nixosModules.boot
       self.nixosModules.locale
