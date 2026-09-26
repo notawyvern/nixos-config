@@ -27,7 +27,12 @@
     };
 
   flake.homeModules.home =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       programs.home-manager.enable = true;
       home = {
@@ -58,28 +63,19 @@
 
       xdg = {
         autostart.readOnly = true;
-        desktopEntries = {
-          htop = {
-            name = "Htop";
-            noDisplay = true;
-          };
-          vim = {
-            name = "Vim";
-            noDisplay = true;
-          };
-          gvim = {
-            name = "gvim";
-            noDisplay = true;
-          };
-          pcmanfm-qt-desktop-pref = {
-            name = "desktop-pref";
-            noDisplay = true;
-          };
-          cups = {
-            name = "cups";
-            noDisplay = true; # hides .desktop file for non-existent printer server
-          };
-        };
+        desktopEntries =
+          lib.genAttrs
+            [
+              "htop"
+              "vim"
+              "gvim"
+              "pcmanfm-qt-desktop-pref"
+              "cups"
+            ]
+            (name: {
+              inherit name;
+              noDisplay = true;
+            });
         mimeApps = {
           enable = true;
           defaultApplications = {

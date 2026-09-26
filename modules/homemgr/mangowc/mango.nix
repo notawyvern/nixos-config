@@ -24,11 +24,6 @@
           focused_opacity = "1.0";
           unfocused_opacity = "1.0";
 
-          # Blur
-          blur = 1;
-          blur_layer = 1; # for panels and similar
-          blur_optimized = 1; # cacheing
-
           # Animation Configuration(support type:zoom,slide)
           # tag_animation_direction: 1-horizontal,0-vertical
           animations = 1;
@@ -129,6 +124,15 @@
             # exit
             "ctrl+alt,space,quit"
             "SUPER,q,killclient,"
+
+            # audio
+            "none,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+            "none,XF86AudioLowerVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            "none,XF86AudioMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
+            # light
+            "none,XF86MonBrightnessUp,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%+"
+            "none,XF86MonBrightnessDown,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
 
             # switch window focus
             "SUPER,h,focusdir,left"
