@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
-
 {
   flake.homeModules.mango-core =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      config,
+      ...
+    }:
     {
       # menu to run programs
       programs.tofi = {
@@ -21,6 +23,7 @@
         };
       };
 
+      stylix.targets.waybar.opacity.enable = false;
       programs.waybar = {
         enable = true;
         settings.bar = {
@@ -31,6 +34,7 @@
           modules-left = [ "ext/workspaces" ];
           modules-center = [ "clock" ];
           modules-right = [
+            "battery"
             "network"
             "wireplumber"
           ];
@@ -39,6 +43,18 @@
 
           clock = {
             format = "{:%d/%m/%Y, %H:%M}h";
+            tooltip = false;
+          };
+
+          battery = {
+            format = "{icon} {capacity}%";
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
             tooltip = false;
           };
 
@@ -72,6 +88,11 @@
         };
         style = ''
           window#waybar {
+          background: transparent;
+          }
+
+          window#waybar > box {
+          background: @base00;
           border-radius: 8px;
           }
         '';

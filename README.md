@@ -34,7 +34,7 @@ This configuration is opinionated and can change. The documentation is meant for
 │   │   ├── locale.nix
 │   │   ├── network.nix
 │   │   ├── pkgmgr.nix
-│   │   ├── swap.nix
+│   │   ├── zswap.nix
 │   │   └── users.nix
 │   ├── global
 │   │   ├── loginmgr.nix
@@ -76,13 +76,13 @@ The [webapps](./modules/homemgr/pkgs/webapps.nix) rely on the Zen browser *webap
 ### Needs
 
 > [!CAUTION]
-> Follow these, else your drive may be wiped without an OS.
+> The installer requires some of these not to fail; missing others can leave you without an OS. Dual boot is unsupported.
 
-- Internet access
-- GPT partitioning support
-- UEFI setup mode
+- Internet
+- A UEFI system in setup mode
 - x86_64 architecture
-- Executing on a NixOS install or bootable image
+- TPM 2.0, only for laptops
+- The Nix programming language
 
 ### Usage
 
@@ -97,8 +97,8 @@ sudo bash nixos-config/install.sh
 
 ### Shortcuts
 
->[!NOTE]
->Click the waybar icons to configure network or audio through GUI.
+>[!TIP]
+>Click the waybar icons to configure network or audio through GUI. Try also pressing the brightness and audio keys on a laptop.
 
 The Windows or the Super key is used as Mod (modifier). The following shortcuts are the most important.
 
@@ -112,6 +112,8 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 - **Mod+Shift+u**: powers off
 - **Mod+Shift+r**: reboots
 
+**nixos-rebuild** is disabled. Use [nh](https://github.com/nix-community/nh), a modern alternative, instead.
+
 ### Software
 
 - **Bootloader**: Limine
@@ -122,7 +124,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 **Most programs follow:**
 
 > [!NOTE]
-> These are the installed ones as of the time of writing and might be subject to change due to time and preferences.
+> These are the installed ones as of the time of writing and can suddenly change.
 
 * **IT**
     - VSCodium

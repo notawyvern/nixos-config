@@ -108,7 +108,8 @@ nix run nixpkgs#sbctl -- create-keys
 nix run nixpkgs#sbctl -- enroll-keys -m -f
 
 # Install Limine.
-nixos-rebuild boot --flake /etc/nixos#$HOSTNAME
+NH_OS_FLAKE=/etc/nixos 
+nh os boot -R --install-bootloader -H "$HOSTNAME"
 CHROOT_EOF
 
 # Enroll the LUKS volume with the TPM on laptops.

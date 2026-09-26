@@ -133,6 +133,7 @@
       };
 
       # options in https://alacritty.org/config-alacritty.html
+      stylix.targets.alacritty.opacity.enable = false;
       programs.alacritty = {
         enable = true;
         settings = {
