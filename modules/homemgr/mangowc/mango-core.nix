@@ -31,6 +31,7 @@
           modules-left = [ "ext/workspaces" ];
           modules-center = [ "clock" ];
           modules-right = [
+            "battery"
             "network"
             "wireplumber"
           ];
@@ -39,6 +40,18 @@
 
           clock = {
             format = "{:%d/%m/%Y, %H:%M}h";
+            tooltip = false;
+          };
+
+          battery = {
+            format = "{icon} {capacity}%";
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
             tooltip = false;
           };
 

@@ -76,13 +76,13 @@ The [webapps](./modules/homemgr/pkgs/webapps.nix) rely on the Zen browser *webap
 ### Needs
 
 > [!CAUTION]
-> Follow these, else your drive may be wiped without an OS.
+> Some needs are for the script to run, while the lack of others may leave you without an OS. Dual boot on the target drive is unsupported.
 
-- Internet access
-- GPT partitioning support
-- UEFI setup mode
+- Internet
+- A UEFI system in setup mode
 - x86_64 architecture
-- Executing on a NixOS install or bootable image
+- TPM 2.0, only for laptops
+- The Nix programming language
 
 ### Usage
 
@@ -103,6 +103,7 @@ sudo bash nixos-config/install.sh
 The Windows or the Super key is used as Mod (modifier). The following shortcuts are the most important.
 
 - **Arrow keys**: press during boot to select generations
+- **Brightness and audio keys**: press on laptop
 - **Mod+b**: opens browser
 - **Mod+w**: launches the tofi launcher
 - **Mod+t**: opens the alacritty terminal
