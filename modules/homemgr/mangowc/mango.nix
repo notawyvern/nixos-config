@@ -1,194 +1,218 @@
 {
-  self,
   inputs,
   ...
 }:
 
 {
   flake.homeModules.mangowc =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      osConfig,
+      ...
+    }:
     let
+      # layout value is "us" if unset, so mango won't depend on it.
+      xserver-xkb-layout = osConfig.services.xserver.xkb.layout;
       system = pkgs.stdenv.hostPlatform.system;
-      zen-browser = inputs.zen-browser.packages.${system}.default;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      zen-browser = inputs.zen-browser.packages.${system}.default;
+
+      # october 2026, mkOpacityHexColor generates ARGB,
+      # not RGBA, opposing the docs. mango uses the latter.
+      inherit (config.lib.stylix) mkHexColor colors;
+      mkMangoColor = name: "${mkHexColor colors.${name}}ff";
     in
     {
       imports = [ inputs.mango.hmModules.mango ];
       wayland.windowManager.mango = {
         enable = true;
         package = pkgs-unstable.mango;
-        settings = {
-          # Window effect
-          border_radius = 6;
-          no_radius_when_single = 0;
-          focused_opacity = "1.0";
-          unfocused_opacity = "1.0";
+        settings =
+          # 0 and 1 are booleans
+          lib.genAttrs [
+            "blur"
+            "blur_layer"
+            "blur_optimized" # cacheing
 
-          # Animation Configuration(support type:zoom,slide)
-          # tag_animation_direction: 1-horizontal,0-vertical
-          animations = 1;
-          layer_animations = 1;
-          animation_type_open = "slide";
-          animation_type_close = "slide";
-          animation_fade_in = 1;
-          animation_fade_out = 1;
-          tag_animation_direction = 1;
-          zoom_initial_ratio = "0.3";
-          zoom_end_ratio = "0.8";
-          fadein_begin_opacity = "0.5";
-          fadeout_begin_opacity = "0.8";
-          animation_duration_move = 500;
-          animation_duration_open = 400;
-          animation_duration_tag = 350;
-          animation_duration_close = 800;
-          animation_duration_focus = 0;
-          animation_curve_open = "0.46,1.0,0.29,1";
-          animation_curve_move = "0.46,1.0,0.29,1";
-          animation_curve_tag = "0.46,1.0,0.29,1";
-          animation_curve_close = "0.08,0.92,0,1";
-          animation_curve_focus = "0.46,1.0,0.29,1";
+            "animations"
+            "layer_animations"
+            "animation_fade_in"
+            "animation_fade_out"
+            "tag_animation_direction"
 
-          # Master-Stack Layout Setting
-          new_is_master = 1;
-          default_mfact = "0.55";
-          default_nmaster = 1;
-          smartgaps = 0;
+            "new_is_master"
+            "default_master_count"
+            "no_border_when_single"
+            "focus_on_activate"
+            "sloppy_focus"
+            "drag_tile_to_tile"
 
-          # Overview Setting
-          enable_hotarea = 0;
-          overviewgappi = 5;
-          overviewgappo = 30;
+          ] (_: 1)
+          // lib.genAttrs [
+            "smart_gaps"
+            "enable_hotarea"
+            "warp_cursor"
+            "focus_cross_monitor"
+            "focus_cross_tag"
+            "enable_floating_snap"
+            "numlock_on"
+            "no_radius_when_single"
+            "animation_duration_focus"
+            "mouse_natural_scrolling"
 
-          # Misc
-          no_border_when_single = 1;
-          axis_bind_apply_timeout = 100;
-          focus_on_activate = 1;
-          sloppyfocus = 1;
-          warpcursor = 0;
-          focus_cross_monitor = 0;
-          focus_cross_tag = 0;
-          enable_floating_snap = 0;
-          snap_distance = 30;
-          drag_tile_to_tile = 1;
+          ] (_: 0)
+          // {
 
-          # keyboard
-          repeat_rate = 25;
-          repeat_delay = 600;
-          numlockon = 0;
-          xkb_rules_layout = "br";
+            # Window effect
+            border_radius = 6;
+            focused_opacity = "1.0";
+            unfocused_opacity = "1.0";
 
-          # mouse
-          mouse_natural_scrolling = 0;
+            # Animations
+            animation_type_open = "zoom";
+            animation_type_close = "slide";
+            zoom_initial_ratio = "0.2";
+            zoom_end_ratio = "0.9";
+            fade_in_begin_opacity = "0.5";
+            fade_out_begin_opacity = "0.8";
+            animation_duration_move = 550;
+            animation_duration_open = 450;
+            animation_duration_tag = 350;
+            animation_duration_close = 800;
+            animation_curve_open = "0.46,1.0,0.29,1";
+            animation_curve_move = "0.46,1.0,0.29,1";
+            animation_curve_tag = "0.46,1.0,0.29,1";
+            animation_curve_close = "0.08,0.92,0,1";
+            animation_curve_focus = "0.46,1.0,0.29,1";
 
-          # Appearance
-          gappih = 5;
-          gappiv = 5;
-          gappoh = 10;
-          gappov = 10;
-          scratchpad_width_ratio = "0.8";
-          scratchpad_height_ratio = "0.9";
-          borderpx = 4;
-          rootcolor = "0x201b14ff";
-          bordercolor = "0x444444ff";
-          focuscolor = "0xc9b890ff";
-          maximizescreencolor = "0x89aa61ff";
-          urgentcolor = "0xad401fff";
-          scratchpadcolor = "0x516c93ff";
-          globalcolor = "0xb153a7ff";
-          overlaycolor = "0x14a57cff";
+            # Master-Stack Layout Setting
+            default_master_factor = "0.55";
 
-          # layouts: tile,scroller,grid,deck,monocle,center_tile,vertical_tile,vertical_scroller
-          tagrule = [
-            "id:1,layout_name:dwindle"
-            "id:2,layout_name:dwindle"
-            "id:3,layout_name:dwindle"
-            "id:4,layout_name:dwindle"
-            "id:5,layout_name:dwindle"
-            "id:6,layout_name:dwindle"
-            "id:7,layout_name:dwindle"
-            "id:8,layout_name:dwindle"
-            "id:9,layout_name:dwindle"
-          ];
+            # Overview Setting
+            overview_gap_inner = 5;
+            overview_gap_outer = 30;
 
-          bind = [
-            # launchers
-            "SUPER,w,spawn,${pkgs.tofi}/bin/tofi-drun"
-            "SUPER,t,spawn,${pkgs.alacritty}/bin/alacritty"
-            "SUPER,b,spawn,${zen-browser}/bin/zen-beta"
-            "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c --encoding jpg"
+            # Misc
+            axis_bind_apply_timeout = 100;
+            snap_distance = 30;
 
-            # power
-            "SUPER+Shift,u,spawn,${pkgs.systemd}/bin/systemctl poweroff"
-            "SUPER+Shift,r,spawn,${pkgs.systemd}/bin/systemctl reboot"
+            # keyboard
+            repeat_rate = 25;
+            repeat_delay = 600;
+            xkb_rules_layout = "${xserver-xkb-layout}";
 
-            # exit
-            "ctrl+alt,space,quit"
-            "SUPER,q,killclient,"
+            # Appearance
+            gap_inner_horizontal = 9;
+            gap_inner_vertical = 9;
+            gap_outer_horizontal = 10;
+            gap_outer_vertical = 10;
+            scratchpad_width_ratio = "0.8";
+            scratchpad_height_ratio = "0.9";
+            border_px = 4;
+            root_color = mkMangoColor "base00";
+            border_color = mkMangoColor "base02";
+            focus_color = mkMangoColor "base0D";
+            maximized_screen_color = mkMangoColor "base0B";
+            urgent_color = mkMangoColor "base09";
+            scratchpad_color = mkMangoColor "base0E";
+            global_color = mkMangoColor "base0C";
+            overlay_color = mkMangoColor "base04";
 
-            # audio
-            "none,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-            "none,XF86AudioLowerVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-            "none,XF86AudioMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            # layouts: tile,scroller,grid,deck,monocle,center_tile,vertical_tile,vertical_scroller
+            tag_rule = [
+              "id:1,layout_name:dwindle"
+              "id:2,layout_name:dwindle"
+              "id:3,layout_name:dwindle"
+              "id:4,layout_name:dwindle"
+              "id:5,layout_name:dwindle"
+              "id:6,layout_name:dwindle"
+              "id:7,layout_name:dwindle"
+              "id:8,layout_name:dwindle"
+              "id:9,layout_name:dwindle"
+            ];
 
-            # light
-            "none,XF86MonBrightnessUp,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%+"
-            "none,XF86MonBrightnessDown,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+            bind = [
+              # launchers
+              "SUPER,w,spawn,${pkgs.tofi}/bin/tofi-drun"
+              "SUPER,t,spawn,${pkgs.foot}/bin/foot"
+              "SUPER,b,spawn,${zen-browser}/bin/zen-beta"
+              "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c --encoding jpg"
 
-            # switch window focus
-            "SUPER,h,focusdir,left"
-            "SUPER,j,focusdir,down"
-            "SUPER,k,focusdir,up"
-            "SUPER,l,focusdir,right"
+              # power
+              "SUPER+Shift,u,spawn,${pkgs.systemd}/bin/systemctl poweroff"
+              "SUPER+Shift,r,spawn,${pkgs.systemd}/bin/systemctl reboot"
 
-            # swap window
-            "SUPER+SHIFT,h,exchange_client,left"
-            "SUPER+SHIFT,j,exchange_client,down"
-            "SUPER+SHIFT,k,exchange_client,up"
-            "SUPER+SHIFT,l,exchange_client,right"
+              # exit
+              "ctrl+alt,space,quit"
+              "SUPER,q,killclient,"
 
-            # switch window status
-            "SUPER,f,togglefullscreen,"
+              # audio
+              "none,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+              "none,XF86AudioLowerVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+              "none,XF86AudioMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
-            # switch layout
-            "SUPER,space,switch_layout"
+              # light
+              "none,XF86MonBrightnessUp,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%+"
+              "none,XF86MonBrightnessDown,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
 
-            # tag switch
-            "SUPER,1,view,1,0"
-            "SUPER,2,view,2,0"
-            "SUPER,3,view,3,0"
-            "SUPER,4,view,4,0"
-            "SUPER,5,view,5,0"
-            "SUPER,6,view,6,0"
-            "SUPER,7,view,7,0"
-            "SUPER,8,view,8,0"
-            "SUPER,9,view,9,0"
-            "SUPER,0,toggleoverview"
+              # switch window focus
+              "SUPER,h,focusdir,left"
+              "SUPER,j,focusdir,down"
+              "SUPER,k,focusdir,up"
+              "SUPER,l,focusdir,right"
 
-            # places windows in tags
-            "SUPER+shift,1,tag,1,0"
-            "SUPER+shift,2,tag,2,0"
-            "SUPER+shift,3,tag,3,0"
-            "SUPER+shift,4,tag,4,0"
-            "SUPER+shift,5,tag,5,0"
-            "SUPER+shift,6,tag,6,0"
-            "SUPER+shift,7,tag,7,0"
-            "SUPER+shift,8,tag,8,0"
-            "SUPER+shift,9,tag,9,0"
+              # swap window
+              "SUPER+SHIFT,h,exchange_client,left"
+              "SUPER+SHIFT,j,exchange_client,down"
+              "SUPER+SHIFT,k,exchange_client,up"
+              "SUPER+SHIFT,l,exchange_client,right"
 
-          ];
+              # switch window status
+              "SUPER,f,togglefullscreen,"
 
-          mousebind = [
-            # Mouse Button Bindings
-            "SUPER,btn_left,moveresize,curmove"
-            "SUPER,btn_right,moveresize,curresize"
-          ];
+              # switch layout
+              "SUPER,space,switch_layout"
 
-          windowrule = [
-            "isfloating:1,appid:swayimg"
-          ];
-        };
+              # tag switch
+              "SUPER,1,view,1,0"
+              "SUPER,2,view,2,0"
+              "SUPER,3,view,3,0"
+              "SUPER,4,view,4,0"
+              "SUPER,5,view,5,0"
+              "SUPER,6,view,6,0"
+              "SUPER,7,view,7,0"
+              "SUPER,8,view,8,0"
+              "SUPER,9,view,9,0"
+              "SUPER,0,toggleoverview"
+
+              # places windows in tags
+              "SUPER+shift,1,tag,1,0"
+              "SUPER+shift,2,tag,2,0"
+              "SUPER+shift,3,tag,3,0"
+              "SUPER+shift,4,tag,4,0"
+              "SUPER+shift,5,tag,5,0"
+              "SUPER+shift,6,tag,6,0"
+              "SUPER+shift,7,tag,7,0"
+              "SUPER+shift,8,tag,8,0"
+              "SUPER+shift,9,tag,9,0"
+
+            ];
+
+            mousebind = [
+              # Mouse Button Bindings
+              "SUPER,btn_left,moveresize,curmove"
+              "SUPER,btn_right,moveresize,curresize"
+            ];
+
+            window_rule = [
+              "is_floating:1,app_id:swayimg"
+            ];
+          };
         autostart_sh = ''
-          ${pkgs.wlsunset}/bin/wlsunset -S 5:00 -s 18:00 -T 6500 -t 2800 &
+          ${config.mango-core.wlsunset}/bin/wlsunset-wrapper &
+          ${pkgs.mako}/bin/mako &
           ${pkgs.swaybg}/bin/swaybg -i ${inputs.wallpaper} &
           ${pkgs.waybar}/bin/waybar &
         '';

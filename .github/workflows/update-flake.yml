@@ -2,8 +2,8 @@ name: Update flake.lock
 
 on:
   schedule:
-    - cron: "0 0 * * 3,6" # wednesday and saturday
-  workflow_dispatch: # allows manual triggering
+    - cron: "0 0 * * 6" # saturday
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,18 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - uses: DeterminateSystems/determinate-nix-action@v3.21.9
+      - uses: DeterminateSystems/determinate-nix-action@v3.24.1
 
       - name: Update flake
         run: nix flake update
 
       - name: Check flake
-        run: nix flake check
+        run: nix flake check # differs from flake checker action
 
       - name: Check flake inputs
         uses: DeterminateSystems/flake-checker-action@v14
 
-      - uses: stefanzweifel/git-auto-commit-action@v7.2.0
+      - name: Get current date
+        run: echo "DATE=$(date +'%d/%m/%Y')" >> "$GITHUB_ENV"
+
+      - uses: stefanzweifel/git-auto-commit-action@v7.2.1
         with:
           file_pattern: flake.lock
-          commit_message: flake.lock regular update
+          commit_message: "flake.lock update: ${{ env.DATE }}"

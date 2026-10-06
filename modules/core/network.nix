@@ -1,13 +1,6 @@
-{ self, inputs, ... }:
 {
-  flake.nixosModules.network =
-    { pkgs, ... }:
-    {
-      # internet
-      networking.networkmanager.enable = true;
-
-      # firewall
-      networking.nftables.enable = true; # modern iptables alternative
-    };
-
+  flake.nixosModules.network = {
+    networking.networkmanager.enable = true;
+    networking.nftables.enable = true; # modern iptables firewall alternative
+  };
 }
