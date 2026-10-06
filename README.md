@@ -34,8 +34,8 @@ This configuration is opinionated and can change. The documentation is meant for
 │   │   ├── locale.nix
 │   │   ├── network.nix
 │   │   ├── pkgmgr.nix
-│   │   ├── zswap.nix
-│   │   └── users.nix
+│   │   ├── users.nix
+│   │   └── zswap.nix
 │   ├── global
 │   │   ├── loginmgr.nix
 │   │   └── stylix.nix

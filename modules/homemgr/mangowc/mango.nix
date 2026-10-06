@@ -9,8 +9,13 @@
     { pkgs, config, ... }:
     let
       system = pkgs.stdenv.hostPlatform.system;
-      zen-browser = inputs.zen-browser.packages.${system}.default;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      zen-browser = inputs.zen-browser.packages.${system}.default;
+
+      # october 2026, mkOpacityHexColor generates ARGB,
+      # not RGBA, opposing the docs. mango uses the latter.
+      inherit (config.lib.stylix) mkHexColor colors;
+      mkMangoColor = name: "${mkHexColor colors.${name}}ff";
     in
     {
       imports = [ inputs.mango.hmModules.mango ];
@@ -24,11 +29,16 @@
           focused_opacity = "1.0";
           unfocused_opacity = "1.0";
 
+          # Blur
+          blur = 1;
+          blur_layer = 1; # for panels and similar
+          blur_optimized = 1; # cacheing
+
           # Animation Configuration(support type:zoom,slide)
           # tag_animation_direction: 1-horizontal,0-vertical
           animations = 1;
           layer_animations = 1;
-          animation_type_open = "slide";
+          animation_type_open = "zoom";
           animation_type_close = "slide";
           animation_fade_in = 1;
           animation_fade_out = 1;
@@ -38,7 +48,7 @@
           fadein_begin_opacity = "0.5";
           fadeout_begin_opacity = "0.8";
           animation_duration_move = 500;
-          animation_duration_open = 400;
+          animation_duration_open = 300;
           animation_duration_tag = 350;
           animation_duration_close = 800;
           animation_duration_focus = 0;
@@ -88,14 +98,14 @@
           scratchpad_width_ratio = "0.8";
           scratchpad_height_ratio = "0.9";
           borderpx = 4;
-          rootcolor = "0x201b14ff";
-          bordercolor = "0x444444ff";
-          focuscolor = "0xc9b890ff";
-          maximizescreencolor = "0x89aa61ff";
-          urgentcolor = "0xad401fff";
-          scratchpadcolor = "0x516c93ff";
-          globalcolor = "0xb153a7ff";
-          overlaycolor = "0x14a57cff";
+          rootcolor = mkMangoColor "base00";
+          bordercolor = mkMangoColor "base02";
+          focuscolor = mkMangoColor "base0D";
+          maximizescreencolor = mkMangoColor "base0B";
+          urgentcolor = mkMangoColor "base09";
+          scratchpadcolor = mkMangoColor "base0E";
+          globalcolor = mkMangoColor "base0C";
+          overlaycolor = mkMangoColor "base04";
 
           # layouts: tile,scroller,grid,deck,monocle,center_tile,vertical_tile,vertical_scroller
           tagrule = [
@@ -188,7 +198,7 @@
           ];
         };
         autostart_sh = ''
-          ${pkgs.wlsunset}/bin/wlsunset -S 5:00 -s 18:00 -T 6500 -t 2800 &
+          ${config.mango-core.wlsunset}/bin/wlsunset-wrapper &
           ${pkgs.swaybg}/bin/swaybg -i ${inputs.wallpaper} &
           ${pkgs.waybar}/bin/waybar &
         '';

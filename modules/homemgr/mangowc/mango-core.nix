@@ -1,101 +1,128 @@
 {
+  inputs,
+  ...
+}:
+
+let
+  wrappers = inputs.wrappers;
+in
+{
   flake.homeModules.mango-core =
     {
       pkgs,
-      config,
+      lib,
       ...
     }:
-    {
-      # menu to run programs
-      programs.tofi = {
-        enable = true;
-        settings = {
-          history = false;
-          prompt-text = ''" "'';
-          hide-cursor = true;
-          drun-launch = true;
-
-          # fullscreen mode
-          width = "100%";
-          height = "100%";
-          border-width = 0;
-          outline-width = 0;
+    let
+      wlsunset = wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.wlsunset;
+        binName = "wlsunset-wrapper";
+        flags = {
+          "-S" = "5:00";
+          "-s" = "18:00";
+          "-T" = "6500";
+          "-t" = "2800";
         };
       };
+    in
+    {
+      options.mango-core.wlsunset = lib.mkOption {
+        type = lib.types.package;
+        readOnly = true;
+      };
 
-      stylix.targets.waybar.opacity.enable = false;
-      programs.waybar = {
-        enable = true;
-        settings.bar = {
-          layer = "top";
-          position = "top";
-          margin = "9 9 0 9";
+      config = {
+        mango-core.wlsunset = wlsunset;
+        home.packages = lib.mkAfter [
+          wlsunset
+        ];
 
-          modules-left = [ "ext/workspaces" ];
-          modules-center = [ "clock" ];
-          modules-right = [
-            "battery"
-            "network"
-            "wireplumber"
-          ];
+        # menu to run programs
+        programs.tofi = {
+          enable = true;
+          settings = {
+            history = false;
+            prompt-text = ''" "'';
+            hide-cursor = true;
+            drun-launch = true;
 
-          "ext/workspaces".on-click = "activate";
-
-          clock = {
-            format = "{:%d/%m/%Y, %H:%M}h";
-            tooltip = false;
-          };
-
-          battery = {
-            format = "{icon} {capacity}%";
-            format-icons = [
-              ""
-              ""
-              ""
-              ""
-              ""
-            ];
-            tooltip = false;
-          };
-
-          network = with pkgs; {
-            format-disconnected = "󰪎 offline";
-            format-ethernet = " {ifname}";
-            format-wifi = "{icon} {signalStrength}%";
-            format-icons = [
-              "󰤟"
-              "󰤢"
-              "󰤥"
-              "󰤨"
-            ];
-            on-click = "${networkmanagerapplet}/bin/nm-connection-editor";
-            tooltip = false;
-          };
-
-          wireplumber = {
-            format = "{icon} {volume}%";
-            format-icons = [
-              ""
-              ""
-              ""
-            ];
-            format-muted = " {volume}%";
-            tooltip = false;
-            scroll-step = 5.0;
-            on-click = "${pkgs.lxqt.pavucontrol-qt}/bin/pavucontrol-qt";
-            on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            # fullscreen mode
+            width = "100%";
+            height = "100%";
+            border-width = 0;
+            outline-width = 0;
           };
         };
-        style = ''
-          window#waybar {
-          background: transparent;
-          }
 
-          window#waybar > box {
-          background: @base00;
-          border-radius: 8px;
-          }
-        '';
+        programs.waybar = {
+          enable = true;
+          settings.bar = {
+            layer = "top";
+            position = "top";
+            margin = "9 9 0 9";
+
+            modules-left = [ "ext/workspaces" ];
+            modules-center = [ "clock" ];
+            modules-right = [
+              "battery"
+              "network"
+              "wireplumber"
+            ];
+
+            "ext/workspaces".on-click = "activate";
+
+            clock = {
+              format = "{:%d/%m/%Y, %H:%M}h";
+              tooltip = false;
+            };
+
+            battery = {
+              format = "{icon} {capacity}%";
+              format-icons = [
+                ""
+                ""
+                ""
+                ""
+                ""
+              ];
+              tooltip = false;
+            };
+
+            network = with pkgs; {
+              format-disconnected = "󰪎 offline";
+              format-ethernet = " {ifname}";
+              format-wifi = "{icon} {signalStrength}%";
+              format-icons = [
+                "󰤟"
+                "󰤢"
+                "󰤥"
+                "󰤨"
+              ];
+              on-click = "${networkmanagerapplet}/bin/nm-connection-editor";
+              tooltip = false;
+            };
+
+            wireplumber = {
+              format = "{icon} {volume}%";
+              format-icons = [
+                ""
+                ""
+                ""
+              ];
+              format-muted = " {volume}%";
+              tooltip = false;
+              scroll-step = 5.0;
+              on-click = "${pkgs.lxqt.pavucontrol-qt}/bin/pavucontrol-qt";
+              on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            };
+          };
+          style = ''
+            window#waybar {
+            border-radius: 8px;
+            }
+          '';
+        };
       };
     };
 }

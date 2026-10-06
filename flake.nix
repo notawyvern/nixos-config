@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    wrappers.url = "github:lassulus/wrappers";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:denful/import-tree";
 
@@ -27,7 +29,7 @@
     stylix.url = "github:nix-community/stylix/release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/spiritual/angel-with-a-bow.jpg";
+    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/fantasy/girl-and-yokais.jpg";
     wallpaper.flake = false;
   };
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
