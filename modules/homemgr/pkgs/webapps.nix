@@ -66,6 +66,8 @@
             "intl.locale.requested" = "pt-BR"; # profile language
             "zen.window-sync.enabled" = false; # tab separation for webapps
             "extensions.autoDisableScopes" = 0; # auto enable adblock
+            "signon.rememberSignons" = false; # no password signons
+            "permissions.default.desktop-notification" = 1; # mako notifications
 
             # disables ui
             "zen.view.compact.enable-at-startup" = true;
@@ -91,7 +93,17 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
       zen-browser = inputs.zen-browser.packages.${system}.default;
-      webapp-run = "${zen-browser}/bin/zen-beta -P webapps --new-window";
+
+      webapp-run = "${zen-wrap}/bin/webapp-run";
+      zen-wrap = inputs.wrappers.lib.wrapPackage {
+        inherit pkgs;
+        binName = "webapp-run";
+        package = zen-browser;
+        flags = {
+          "-P" = "webapps";
+          "--new-window" = true;
+        };
+      };
     in
     {
       /*
@@ -100,10 +112,6 @@
         origin is being installed.
       */
       xdg.desktopEntries = {
-        photopea = {
-          name = "Photopea";
-          exec = "${webapp-run} https://www.photopea.com/";
-        };
         protonmail = {
           name = "Proton Mail";
           exec = "${webapp-run} https://mail.proton.me/";

@@ -12,55 +12,7 @@ echo "NixOS Installation"
 echo "=================="
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-
-# Select the target host.
-while true; do
-    read -rp "Select device (1: desktop, 2: laptop): " DEVICE
-
-    case "$DEVICE" in
-        1)
-            HOSTNAME="desktop"
-            break
-            ;;
-        2)
-            HOSTNAME="laptop"
-            break
-            ;;
-        *)
-            echo "Invalid selection. Please enter 1 or 2."
-            ;;
-    esac
-done
-
-DISKO_CONF="$SCRIPT_DIR/modules/hosts/$HOSTNAME/_disko.nix"
-
-PASSFILE="$(mktemp)"
-trap 'rm -f -- "$PASSFILE"' EXIT
-
-# Request and verify the LUKS encryption password on laptops.
-if [[ "$HOSTNAME" == "laptop" ]]; then
-    while true; do
-        read -rsp "Enter LUKS encryption password: " PASS
-        echo
-
-        if [[ -z "$PASS" ]]; then
-            echo "Password cannot be empty."
-            continue
-        fi
-
-        read -rsp "Confirm LUKS encryption password: " PASS_CONFIRM
-        echo
-
-        if [[ "$PASS" == "$PASS_CONFIRM" ]]; then
-            break
-        fi
-
-        echo "Passwords do not match. Try again."
-    done
-
-    printf '%s' "$PASS" > "$PASSFILE"
-    unset PASS PASS_CONFIRM
-fi
+DISKO_CONF="$SCRIPT_DIR/modules/hosts/nixos/_disko.nix"
 
 echo
 echo "Available disk devices:"
@@ -74,18 +26,16 @@ read -rp "Continue? (y/N) " -n 1 -r
 echo
 [[ "$REPLY" =~ ^[Yy]$ ]] || exit 1
 
-export NIX_CONFIG="experimental-features = nix-command flakes"
-
 # Partition, format, and mount the target system using Disko.
+export NIX_CONFIG="experimental-features = nix-command flakes"
 nix run github:nix-community/disko/v1.13.0 -- \
     --yes-wipe-all-disks \
     --argstr drive "$DISK" \
-    --argstr passwordfile "$PASSFILE" \
     --mode destroy,format,mount "$DISKO_CONF"
 
 # Install NixOS without a bootloader.
 # The bootloader will be installed later to avoid conflicts with Secure Boot.
-nixos-install --flake "$SCRIPT_DIR#$HOSTNAME" \
+nixos-install --flake "$SCRIPT_DIR#nixos" \
     --no-root-password \
     --no-bootloader \
     --no-channel-copy
@@ -109,15 +59,8 @@ nix run nixpkgs#sbctl -- enroll-keys -m -f
 
 # Install Limine.
 NH_OS_FLAKE=/etc/nixos 
-nh os boot -R --install-bootloader -H "$HOSTNAME"
+nh os boot -R --install-bootloader -H "nixos"
 CHROOT_EOF
-
-# Enroll the LUKS volume with the TPM on laptops.
-if [[ "$HOSTNAME" == "laptop" ]]; then
-    systemd-cryptenroll \
-        --tpm2-device=auto \
-        /dev/disk/by-partlabel/disk-main-ROOT
-fi
 
 # Set the password for the primary user.
 echo

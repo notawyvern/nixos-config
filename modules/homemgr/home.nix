@@ -69,6 +69,8 @@
               "htop"
               "vim"
               "gvim"
+              "footclient"
+              "foot-server"
               "pcmanfm-qt-desktop-pref"
               "cups"
             ]

@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    wrappers.url = "github:lassulus/wrappers";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:denful/import-tree";
 
@@ -17,17 +19,20 @@
     noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
     noctalia-greeter.inputs.nixpkgs.follows = "nixpkgs";
 
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake/beta";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
     zen-browser.inputs.home-manager.follows = "home-manager";
 
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
+    aquastar.url = "github:notawyvern/aquastar-nix";
+    aquastar.inputs.nixpkgs.follows = "nixpkgs";
+
     stylix.url = "github:nix-community/stylix/release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/refs/heads/main/spiritual/angel-with-a-bow.jpg";
+    wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/main/fantasy/girl-and-yokais.jpg";
     wallpaper.flake = false;
   };
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

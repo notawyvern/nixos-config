@@ -3,10 +3,11 @@
   flake.nixosModules.loginmanager =
     { config, pkgs, ... }:
     let
-      stylix = config.stylix;
-      stylix-colors = config.lib.stylix.colors.withHashtag;
       system = pkgs.stdenv.hostPlatform.system;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+
+      stylix = config.stylix;
+      color = config.lib.stylix.colors.withHashtag;
     in
     {
 
@@ -25,7 +26,7 @@
               scheme = "Synced";
               scheme_selector_position = "hidden";
               hide_logo = true;
-              palette = with stylix-colors; {
+              palette = with color; {
                 primary = base0D;
                 on_primary = base00;
                 secondary = base0E;

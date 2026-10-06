@@ -11,9 +11,9 @@
         image = inputs.wallpaper;
         polarity = "dark";
         opacity = {
-          desktop = 0.5;
-          terminal = 0.8;
-          popups = 0.9;
+          desktop = 0.2;
+          terminal = 0.7;
+          popups = 0.8;
         };
         icons = {
           enable = true;
@@ -29,7 +29,7 @@
 
         fonts = with pkgs.nerd-fonts; {
           sizes = {
-            popups = 22;
+            popups = 14;
             applications = 13;
             desktop = 15;
             terminal = 16;

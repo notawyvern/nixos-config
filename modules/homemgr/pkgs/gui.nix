@@ -22,77 +22,63 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      ruffle-gl = pkgs.writeShellScriptBin "ruffle" ''
-        export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [ pkgs.libGL ]}:$LD_LIBRARY_PATH
-        exec ${pkgs-unstable.ruffle}/bin/ruffle "$@"
-      '';
+      aquastar-launcher = inputs.aquastar.packages.${system}.aquastar-neo;
     in
     {
       # non-configured apps
 
-      home.packages = with pkgs; [
-        # file manager
-        lxqt.pcmanfm-qt
-        lxqt.lxqt-archiver
-        p7zip # archiver's file extensions
+      home.packages =
+        (with pkgs; [
+          # file manager
+          lxqt.pcmanfm-qt
+          lxqt.lxqt-archiver
+          p7zip # archiver's file extensions
 
-        # desktop utils
-        featherpad
-        qpdfview
-        qalculate-qt
-        lxqt.qps
+          # desktop utils
+          featherpad
+          qpdfview
+          qalculate-qt
+          lxqt.qps
 
-        # media and virtualisation
-        ruffle-gl
-        lxqt.pavucontrol-qt
-      ];
+          # media and virtualisation
+          lxqt.pavucontrol-qt
+        ])
+        ++ [
+          aquastar-launcher
 
-      xdg.desktopEntries.ruffle = {
-        # wraps ruffle for opengl support
-        exec = "${ruffle-gl}/bin/ruffle";
-        name = "Ruffle";
-      };
+          (inputs.wrappers.lib.wrapPackage {
+            inherit pkgs;
+            package = pkgs-unstable.photocraft;
+
+            # for photocraft's file chooser
+            runtimeInputs = [ pkgs.zenity ];
+          })
+        ];
 
       # configured apps
 
       xdg.configFile =
         let
+          json = pkgs.formats.json { };
           toml = pkgs.formats.toml { };
           ini = pkgs.formats.ini { };
         in
         {
+          aquastar = {
+            target = "io.github.aquaspy.aquastar-lite/settings.json";
+            force = true;
+            source = json.generate "settings.json" {
+              startup = {
+                game = "aqw";
+                plugin = "adventure-quest-worlds";
+              };
+            };
+          };
           qps = {
             target = "qps/qps.conf";
             force = true;
             source = ini.generate "qps.conf" {
               General.flags = "ExitOnClose, SavePos, infobar, cpubar, loadgraph, loadicon, selectpids, tree, hostname, service";
-            };
-          };
-          ruffle = {
-            target = "ruffle/bookmarks.toml";
-            force = true;
-            source = toml.generate "bookmarks.toml" {
-              bookmark = [
-                {
-                  url = "https://aq.battleon.com/game/flash/Lore4652.swf";
-                  name = "AdventureQuest";
-                }
-
-                {
-                  url = "https://game.aq.com/game/gamefiles/Loader3.swf";
-                  name = "AQWorlds";
-                }
-
-                {
-                  url = "https://play.dragonfable.com/game/DFLoader.swf";
-                  name = "DragonFable";
-                }
-
-                {
-                  url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf";
-                  name = "MechQuest";
-                }
-              ];
             };
           };
           featherpad = {
@@ -115,7 +101,7 @@
             source = toml.generate "settings.conf" {
               System = {
                 Archiver = "lxqt-archiver";
-                Terminal = "alacritty";
+                Terminal = "foot";
               };
             };
           };
@@ -132,14 +118,9 @@
         };
       };
 
-      # options in https://alacritty.org/config-alacritty.html
-      stylix.targets.alacritty.opacity.enable = false;
-      programs.alacritty = {
+      programs.foot = {
         enable = true;
-        settings = {
-          env.SHELL = "${pkgs.fish}/bin/fish";
-          selection.save_to_clipboard = true;
-        };
+        settings.main.shell = "${pkgs.fish}/bin/fish";
       };
 
       programs.swayimg = {
