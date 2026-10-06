@@ -8,31 +8,31 @@
 
   flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     modules = [
+      inputs.flake-parts.flakeModules.flakeModules
 
       {
         networking.hostName = "laptop";
+
+        imports = with self.nixosModules; [
+          # core modules
+          hardware-laptop
+          audio
+          boot
+          locale
+          network
+          packagemanager
+          users
+          zswap
+
+          # global non-essential
+          loginmanager
+          services
+          theming
+
+          # home manager
+          crhHomeManager
+        ];
       }
-
-      inputs.flake-parts.flakeModules.flakeModules
-
-      # core modules
-      self.nixosModules.hardware-laptop
-      self.nixosModules.audio
-      self.nixosModules.boot
-      self.nixosModules.locale
-      self.nixosModules.network
-      self.nixosModules.packagemanager
-      self.nixosModules.users
-      self.nixosModules.zswap
-
-      # global non-essential
-      self.nixosModules.loginmanager
-      self.nixosModules.services
-      self.nixosModules.theming
-
-      # home manager
-      self.nixosModules.crhHomeManager
-
     ];
   };
 }

@@ -29,7 +29,7 @@
 
         fonts = with pkgs.nerd-fonts; {
           sizes = {
-            popups = 22;
+            popups = 14;
             applications = 13;
             desktop = 15;
             terminal = 16;

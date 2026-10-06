@@ -66,6 +66,8 @@
             "intl.locale.requested" = "pt-BR"; # profile language
             "zen.window-sync.enabled" = false; # tab separation for webapps
             "extensions.autoDisableScopes" = 0; # auto enable adblock
+            "signon.rememberSignons" = false; # no password signons
+            "permissions.default.desktop-notification" = 1; # mako notifications
 
             # disables ui
             "zen.view.compact.enable-at-startup" = true;

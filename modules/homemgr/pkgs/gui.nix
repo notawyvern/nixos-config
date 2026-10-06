@@ -22,36 +22,30 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      ruffle-gl = pkgs.writeShellScriptBin "ruffle" ''
-        export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [ pkgs.libGL ]}:$LD_LIBRARY_PATH
-        exec ${pkgs-unstable.ruffle}/bin/ruffle "$@"
-      '';
+      aquastar = inputs.aquastar-nix.packages.${system}.aquastar;
     in
     {
       # non-configured apps
 
-      home.packages = with pkgs; [
-        # file manager
-        lxqt.pcmanfm-qt
-        lxqt.lxqt-archiver
-        p7zip # archiver's file extensions
+      home.packages =
+        (with pkgs; [
+          # file manager
+          lxqt.pcmanfm-qt
+          lxqt.lxqt-archiver
+          p7zip # archiver's file extensions
 
-        # desktop utils
-        featherpad
-        qpdfview
-        qalculate-qt
-        lxqt.qps
+          # desktop utils
+          featherpad
+          qpdfview
+          qalculate-qt
+          lxqt.qps
 
-        # media and virtualisation
-        ruffle-gl
-        lxqt.pavucontrol-qt
-      ];
-
-      xdg.desktopEntries.ruffle = {
-        # wraps ruffle for opengl support
-        exec = "${ruffle-gl}/bin/ruffle";
-        name = "Ruffle";
-      };
+          # media and virtualisation
+          lxqt.pavucontrol-qt
+        ])
+        ++ [
+          aquastar
+        ];
 
       # configured apps
 
@@ -66,33 +60,6 @@
             force = true;
             source = ini.generate "qps.conf" {
               General.flags = "ExitOnClose, SavePos, infobar, cpubar, loadgraph, loadicon, selectpids, tree, hostname, service";
-            };
-          };
-          ruffle = {
-            target = "ruffle/bookmarks.toml";
-            force = true;
-            source = toml.generate "bookmarks.toml" {
-              bookmark = [
-                {
-                  url = "https://aq.battleon.com/game/flash/Lore4652.swf";
-                  name = "AdventureQuest";
-                }
-
-                {
-                  url = "https://game.aq.com/game/gamefiles/Loader3.swf";
-                  name = "AQWorlds";
-                }
-
-                {
-                  url = "https://play.dragonfable.com/game/DFLoader.swf";
-                  name = "DragonFable";
-                }
-
-                {
-                  url = "https://play.mechquest.com/game/gamefiles/MQLoader4.swf";
-                  name = "MechQuest";
-                }
-              ];
             };
           };
           featherpad = {
@@ -133,7 +100,6 @@
       };
 
       # options in https://alacritty.org/config-alacritty.html
-      stylix.targets.alacritty.opacity.enable = false;
       programs.alacritty = {
         enable = true;
         settings = {

@@ -9,6 +9,7 @@
     - [Needs](#needs)
     - [Usage](#usage)
 - [Cheatsheet](#cheatsheet)
+    - [Tips](#tips)
     - [Shortcuts](#shortcuts)
     - [Software](#software)
     - [Wallpapers](#wallpapers)
@@ -34,8 +35,8 @@ This configuration is opinionated and can change. The documentation is meant for
 │   │   ├── locale.nix
 │   │   ├── network.nix
 │   │   ├── pkgmgr.nix
-│   │   ├── zswap.nix
-│   │   └── users.nix
+│   │   ├── users.nix
+│   │   └── zswap.nix
 │   ├── global
 │   │   ├── loginmgr.nix
 │   │   └── stylix.nix
@@ -95,10 +96,14 @@ sudo bash nixos-config/install.sh
 
 ## Cheatsheet
 
-### Shortcuts
+### Tips
 
->[!TIP]
->Click the waybar icons to configure network or audio through GUI. Try also pressing the brightness and audio keys on a laptop.
+1. **nixos-rebuild** is disabled. Use [nh](https://github.com/nix-community/nh), a modern alternative, instead.
+2. Access passwords through Zen preinstalled Bitwarden extension.
+3. All non-regional filters are turned on, no need to configure uBlock Origin.
+4. Waybar icons are minimal GUI settings. Press the brightness and audio keys on a laptop.
+
+### Shortcuts
 
 The Windows or the Super key is used as Mod (modifier). The following shortcuts are the most important.
 
@@ -112,14 +117,12 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 - **Mod+Shift+u**: powers off
 - **Mod+Shift+r**: reboots
 
-**nixos-rebuild** is disabled. Use [nh](https://github.com/nix-community/nh), a modern alternative, instead.
-
 ### Software
 
 - **Bootloader**: Limine
 - **Wayland Compositor**: mangowm
 - **Login Manager**: Noctalia Greeter
-- **Browser**: Zen Browser, uBO configured
+- **Browser**: Zen Browser
 
 **Most programs follow:**
 
@@ -131,16 +134,17 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
     - git
     - Alacritty as a terminal emulator
     - Vim
-    - fish (as in Home Manager)
+    - fish (with vi mode)
 
 * **FUN**
     - FreeTube
-    - Ruffle
+    - AquaStar
 
 * **GENERAL**
     - mpv (uosc gui)
     - fastfetch
     - Zen Browser
+    - mako
     - Qalculate! GTK
     - featherpad
     - pcmanfm-qt
@@ -152,6 +156,7 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 * **WEBAPPS**
     - Photopea
     - Spotify
+    - Bitwarden
     - ChatGPT
     - Proton Mail
     - Koofr Drive

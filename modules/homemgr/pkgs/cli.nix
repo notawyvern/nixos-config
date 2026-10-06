@@ -53,16 +53,13 @@
         };
       };
 
+      programs.starship.enable = true;
       programs.fish = {
         enable = true;
         binds = {
           "ctrl-e --mode insert".command = "accept-autosuggestion";
         };
-        functions = {
-          fish_greeting = "";
-          fish_mode_prompt = "";
-          fish_prompt = "echo -s ''(set_color --bold green) [$USER@$hostname:$PWD]'$ '";
-        };
+        functions.fish_greeting = "";
         shellInit = "set -g fish_key_bindings fish_vi_key_bindings";
         shellAliases = with pkgs; {
           # better outputs & tooling

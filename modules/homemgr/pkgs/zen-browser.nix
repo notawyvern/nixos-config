@@ -35,6 +35,7 @@
             force = true;
             packages = with pkgs.nur.repos.rycee.firefox-addons; [
               ublock-origin
+              bitwarden
             ];
             settings."uBlock0@raymondhill.net" = {
               force = true;
@@ -94,6 +95,7 @@
             "network.trr.mode" = 2; # dns over https
 
             # declutter
+            "signon.rememberSignons" = false; # rather bitwarden
             "identity.fxaccounts.enabled" = false; # no sync in ui
             "browser.shell.checkDefaultBrowser" = false;
             "privacy.userContext.enabled" = false;

@@ -9,8 +9,13 @@
     { pkgs, config, ... }:
     let
       system = pkgs.stdenv.hostPlatform.system;
-      zen-browser = inputs.zen-browser.packages.${system}.default;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      zen-browser = inputs.zen-browser.packages.${system}.default;
+
+      # october 2026, mkOpacityHexColor generates ARGB,
+      # not RGBA, opposing the docs. mango uses the latter.
+      inherit (config.lib.stylix) mkHexColor colors;
+      mkMangoColor = name: "${mkHexColor colors.${name}}ff";
     in
     {
       imports = [ inputs.mango.hmModules.mango ];
@@ -24,21 +29,26 @@
           focused_opacity = "1.0";
           unfocused_opacity = "1.0";
 
+          # Blur
+          blur = 1;
+          blur_layer = 1; # for panels and similar
+          blur_optimized = 1; # cacheing
+
           # Animation Configuration(support type:zoom,slide)
           # tag_animation_direction: 1-horizontal,0-vertical
           animations = 1;
           layer_animations = 1;
-          animation_type_open = "slide";
+          animation_type_open = "zoom";
           animation_type_close = "slide";
           animation_fade_in = 1;
           animation_fade_out = 1;
           tag_animation_direction = 1;
           zoom_initial_ratio = "0.3";
           zoom_end_ratio = "0.8";
-          fadein_begin_opacity = "0.5";
-          fadeout_begin_opacity = "0.8";
+          fade_in_begin_opacity = "0.5";
+          fade_out_begin_opacity = "0.8";
           animation_duration_move = 500;
-          animation_duration_open = 400;
+          animation_duration_open = 300;
           animation_duration_tag = 350;
           animation_duration_close = 800;
           animation_duration_focus = 0;
@@ -50,21 +60,21 @@
 
           # Master-Stack Layout Setting
           new_is_master = 1;
-          default_mfact = "0.55";
-          default_nmaster = 1;
-          smartgaps = 0;
+          default_master_factor = "0.55";
+          default_master_count = 1;
+          smart_gaps = 0;
 
           # Overview Setting
           enable_hotarea = 0;
-          overviewgappi = 5;
-          overviewgappo = 30;
+          overview_gap_inner = 5;
+          overview_gap_outer = 30;
 
           # Misc
           no_border_when_single = 1;
           axis_bind_apply_timeout = 100;
           focus_on_activate = 1;
-          sloppyfocus = 1;
-          warpcursor = 0;
+          sloppy_focus = 1;
+          warp_cursor = 0;
           focus_cross_monitor = 0;
           focus_cross_tag = 0;
           enable_floating_snap = 0;
@@ -74,31 +84,31 @@
           # keyboard
           repeat_rate = 25;
           repeat_delay = 600;
-          numlockon = 0;
+          numlock_on = 0;
           xkb_rules_layout = "br";
 
           # mouse
           mouse_natural_scrolling = 0;
 
           # Appearance
-          gappih = 5;
-          gappiv = 5;
-          gappoh = 10;
-          gappov = 10;
+          gap_inner_horizontal = 5;
+          gap_inner_vertical = 5;
+          gap_outer_horizontal = 10;
+          gap_outer_vertical = 10;
           scratchpad_width_ratio = "0.8";
           scratchpad_height_ratio = "0.9";
-          borderpx = 4;
-          rootcolor = "0x201b14ff";
-          bordercolor = "0x444444ff";
-          focuscolor = "0xc9b890ff";
-          maximizescreencolor = "0x89aa61ff";
-          urgentcolor = "0xad401fff";
-          scratchpadcolor = "0x516c93ff";
-          globalcolor = "0xb153a7ff";
-          overlaycolor = "0x14a57cff";
+          border_px = 4;
+          root_color = mkMangoColor "base00";
+          border_color = mkMangoColor "base02";
+          focus_color = mkMangoColor "base0D";
+          maximized_screen_color = mkMangoColor "base0B";
+          urgent_color = mkMangoColor "base09";
+          scratchpad_color = mkMangoColor "base0E";
+          global_color = mkMangoColor "base0C";
+          overlay_color = mkMangoColor "base04";
 
           # layouts: tile,scroller,grid,deck,monocle,center_tile,vertical_tile,vertical_scroller
-          tagrule = [
+          tag_rule = [
             "id:1,layout_name:dwindle"
             "id:2,layout_name:dwindle"
             "id:3,layout_name:dwindle"
@@ -183,12 +193,13 @@
             "SUPER,btn_right,moveresize,curresize"
           ];
 
-          windowrule = [
-            "isfloating:1,appid:swayimg"
+          window_rule = [
+            "is_floating:1,app_id:swayimg"
           ];
         };
         autostart_sh = ''
-          ${pkgs.wlsunset}/bin/wlsunset -S 5:00 -s 18:00 -T 6500 -t 2800 &
+          ${config.mango-core.wlsunset}/bin/wlsunset-wrapper &
+          ${pkgs.mako}/bin/mako &
           ${pkgs.swaybg}/bin/swaybg -i ${inputs.wallpaper} &
           ${pkgs.waybar}/bin/waybar &
         '';
