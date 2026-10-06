@@ -1,11 +1,10 @@
-{ self, inputs, ... }:
 {
-  # Bootloader.
   flake.nixosModules.boot =
     { pkgs, ... }:
     {
       boot = {
         plymouth.enable = true;
+        tmp.cleanOnBoot = true;
         kernelParams = [ "quiet" ];
         kernelPackages = pkgs.linuxPackages_latest;
         loader = {

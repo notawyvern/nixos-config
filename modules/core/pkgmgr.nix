@@ -1,11 +1,9 @@
 {
-  self,
   inputs,
   ...
 }:
 {
   flake.nixosModules.packagemanager =
-    { pkgs, ... }:
     let
       nixos-config = "github:notawyvern/nixos-config";
     in

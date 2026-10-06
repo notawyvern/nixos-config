@@ -5,30 +5,27 @@
 }:
 
 {
-  flake.nixosModules.crhHomeManager =
-    { pkgs, ... }:
-    {
-      imports = [ inputs.home-manager.nixosModules.default ];
+  flake.nixosModules.crhHomeManager = {
+    imports = [ inputs.home-manager.nixosModules.default ];
 
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.crh = {
-          imports = with self.homeModules; [
-            home
-            mangowc
-            mango-core
-            cliapps
-            guiapps
-            zenbrowser
-          ];
-        };
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      users.crh = {
+        imports = with self.homeModules; [
+          home
+          mangowc
+          mango-core
+          cliapps
+          guiapps
+          zenbrowser
+        ];
       };
     };
+  };
 
   flake.homeModules.home =
     {
-      pkgs,
       lib,
       config,
       ...
@@ -69,6 +66,8 @@
               "htop"
               "vim"
               "gvim"
+              "footclient"
+              "foot-server"
               "pcmanfm-qt-desktop-pref"
               "cups"
             ]

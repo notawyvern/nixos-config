@@ -1,10 +1,8 @@
-{ self, inputs, ... }:
 {
   flake.nixosModules.hardware-desktop =
     {
       config,
       lib,
-      pkgs,
       modulesPath,
       ...
     }:

@@ -1,17 +1,14 @@
-{ self, inputs, ... }:
 {
-  flake.nixosModules.audio =
-    { pkgs, ... }:
-    {
-      # Enable sound with pipewire.
-      services.pulseaudio.enable = false;
-      security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
+  flake.nixosModules.audio = {
+    # Enable sound with pipewire.
+    services.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
 
-      };
     };
+  };
 }
