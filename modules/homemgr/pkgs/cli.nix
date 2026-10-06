@@ -1,8 +1,6 @@
-{ self, inputs, ... }:
-
 {
   flake.homeModules.cliapps =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     {
       programs.fastfetch = {
         enable = true;
@@ -53,6 +51,7 @@
         };
       };
 
+      programs.starship.enable = true;
       programs.fish = {
         enable = true;
         binds = {
@@ -60,10 +59,8 @@
         };
         functions = {
           fish_greeting = "";
-          fish_mode_prompt = "";
-          fish_prompt = "echo -s ''(set_color --bold green) [$USER@$hostname:$PWD]'$ '";
+          fish_user_key_bindings = "fish_vi_key_bindings";
         };
-        shellInit = "set -g fish_key_bindings fish_vi_key_bindings";
         shellAliases = with pkgs; {
           # better outputs & tooling
           cat = "${bat}/bin/bat";

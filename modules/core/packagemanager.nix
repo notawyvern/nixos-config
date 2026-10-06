@@ -1,11 +1,9 @@
 {
-  self,
   inputs,
   ...
 }:
 {
   flake.nixosModules.packagemanager =
-    { pkgs, ... }:
     let
       nixos-config = "github:notawyvern/nixos-config";
     in
@@ -50,12 +48,5 @@
           extraArgs = "--keep 4 --optimise";
         };
       };
-
-      # Pinned stateful data for compatibility;
-      # doesn't determine version of packages.
-      #
-      # To safely change it read the release notes.
-      system.stateVersion = "25.11"; # Did you read the comment?
     };
-
 }
