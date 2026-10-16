@@ -22,30 +22,26 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      aquastar = inputs.aquastar-nix.packages.${system}.aquastar;
     in
     {
       # non-configured apps
 
-      home.packages =
-        (with pkgs; [
-          # file manager
-          lxqt.pcmanfm-qt
-          lxqt.lxqt-archiver
-          p7zip # archiver's file extensions
+      home.packages = with pkgs; [
+        # file manager
+        lxqt.pcmanfm-qt
+        lxqt.lxqt-archiver
+        p7zip # archiver's file extensions
 
-          # desktop utils
-          featherpad
-          qpdfview
-          qalculate-qt
-          lxqt.qps
+        # desktop utils
+        featherpad
+        qpdfview
+        qalculate-qt
+        lxqt.qps
 
-          # media and virtualisation
-          lxqt.pavucontrol-qt
-        ])
-        ++ [
-          aquastar
-        ];
+        # media and virtualisation
+        lxqt.pavucontrol-qt
+        virtualboxKvm
+      ];
 
       # configured apps
 

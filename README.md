@@ -133,12 +133,12 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
     - VSCodium
     - git
     - Alacritty as a terminal emulator
+    - VirtualBox
     - Vim
     - fish (with vi mode)
 
 * **FUN**
     - FreeTube
-    - AquaStar
 
 * **GENERAL**
     - mpv (uosc gui)
@@ -156,7 +156,6 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 * **WEBAPPS**
     - Photopea
     - Spotify
-    - Bitwarden
     - ChatGPT
     - Proton Mail
     - Koofr Drive

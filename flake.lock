@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "aquastar-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1792157197,
-        "narHash": "sha256-F6s+phyrbIdu0Y1yj5YHuV6rhCRNCeNgz13/jGX89rY=",
-        "owner": "notawyvern",
-        "repo": "aquastar-nix",
-        "rev": "c68a3c380c86b720778caa010a8d945d0823edae",
-        "type": "github"
-      },
-      "original": {
-        "owner": "notawyvern",
-        "repo": "aquastar-nix",
-        "type": "github"
-      }
-    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -282,11 +262,11 @@
         "scenefx": "scenefx"
       },
       "locked": {
-        "lastModified": 1792129143,
-        "narHash": "sha256-PilEU+cQIFHmZvMKXZq8uMt/Of7y1iUdIjQNxd+IBR4=",
+        "lastModified": 1792242540,
+        "narHash": "sha256-TJ5WPPidT5WV0wUGoxh/cnnScY9Ub5ArGFMrBuCp01I=",
         "owner": "mangowm",
         "repo": "mango",
-        "rev": "b4a0c9dc41f0b1d3add7d5d27043a4bbf03b9431",
+        "rev": "eab923a2bc4cdf9004341e85cc92fdca52320b56",
         "type": "github"
       },
       "original": {
@@ -401,11 +381,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792157095,
-        "narHash": "sha256-3xHCKT9rCeGfGC+tMIWthMyvjGk25wUlJLsuvBAVWR0=",
+        "lastModified": 1792249243,
+        "narHash": "sha256-zDZMBwcbcj2ufGk9EGy+BnUnV3BT/NiYuNynGiQ0SqA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "a9c7fe7fbf5a7d0bfc905a84cc87b8bed87a301c",
+        "rev": "c21b30ed2ab024497fcd0c26abb0757a3fd1d100",
         "type": "github"
       },
       "original": {
@@ -441,7 +421,6 @@
     },
     "root": {
       "inputs": {
-        "aquastar-nix": "aquastar-nix",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
@@ -647,11 +626,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792047775,
-        "narHash": "sha256-Ks46+ZukSOvdgmextucbLykzpAmygNZ2I+HWxCe03ok=",
+        "lastModified": 1792192561,
+        "narHash": "sha256-XNE80BcOYerOY/+2bfmVk1Sik7FYq7ID9mbtXTeqDN0=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "9342d127aa8c585e82f3f57ddb25800fd546029f",
+        "rev": "733154388e22e459c7e6dd14e6522069bbf25971",
         "type": "github"
       },
       "original": {

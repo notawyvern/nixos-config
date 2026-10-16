@@ -29,9 +29,6 @@
     stylix.url = "github:nix-community/stylix/release-26.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    aquastar-nix.url = "github:notawyvern/aquastar-nix";
-    aquastar-nix.inputs.nixpkgs.follows = "nixpkgs";
-
     wallpaper.url = "https://raw.githubusercontent.com/notawyvern/wallpapers/main/fantasy/girl-and-yokais.jpg";
     wallpaper.flake = false;
   };

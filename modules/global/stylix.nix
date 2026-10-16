@@ -11,9 +11,9 @@
         image = inputs.wallpaper;
         polarity = "dark";
         opacity = {
-          desktop = 0.5;
-          terminal = 0.8;
-          popups = 0.9;
+          desktop = 0.2;
+          terminal = 0.7;
+          popups = 0.8;
         };
         icons = {
           enable = true;
