@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.zswap = {
+  flake.nixosModules.zram = {
     zramSwap = {
       enable = true;
 

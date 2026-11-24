@@ -14,11 +14,13 @@
       users.crh = {
         imports = with self.homeModules; [
           home
-          mangowc
+          mangowm
           mango-core
           cliapps
           guiapps
-          zenbrowser
+          webapps
+          artixgames
+          qutebrowser
         ];
       };
     };
@@ -66,6 +68,7 @@
               "htop"
               "vim"
               "gvim"
+              "firefox"
               "footclient"
               "foot-server"
               "pcmanfm-qt-desktop-pref"

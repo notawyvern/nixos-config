@@ -88,6 +88,22 @@
         "type": "github"
       }
     },
+    "eyd": {
+      "locked": {
+        "lastModified": 1792876502,
+        "narHash": "sha256-WpYMJlzKv16U/OnkkVa11EBzGQXJTDWC4VW1eVshKGc=",
+        "owner": "misuzu",
+        "repo": "eyd",
+        "rev": "4ce6d977c656e4cec93dcdcc0b9da221fc053c51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misuzu",
+        "ref": "v0.3.1",
+        "repo": "eyd",
+        "type": "github"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -282,11 +298,11 @@
         "scenefx": "scenefx"
       },
       "locked": {
-        "lastModified": 1795531239,
-        "narHash": "sha256-+hWJdc6aaugW9XDolBFXnyVhYYM89cboxuxx/IDnVaQ=",
+        "lastModified": 1795786626,
+        "narHash": "sha256-REdqOAC5ysisj8v2+/Aml3rgOen4PR8ME95JnDeZy78=",
         "owner": "mangowm",
         "repo": "mango",
-        "rev": "c8ce01c89eef092bec305a416bc888286c37f443",
+        "rev": "f3b4a5aa38e9a451d6f5f56a1910ccb26aaa3794",
         "type": "github"
       },
       "original": {
@@ -401,11 +417,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795530424,
-        "narHash": "sha256-5Cqk5nbuDXDi0Toosy+QMr2n8thEvsXFhzRY669QLf8=",
+        "lastModified": 1795795452,
+        "narHash": "sha256-8iHPgG/ZKgV3Ai3GvQwcWnU4/BTHyGjTmjW1UZxiWv0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "0fbf857be2772285e2a9121fe1de28cc06ca6d2b",
+        "rev": "91e15c150edbc33cc1070b592ade1bbbefd0ddbc",
         "type": "github"
       },
       "original": {
@@ -442,6 +458,7 @@
     "root": {
       "inputs": {
         "aquastar": "aquastar",
+        "eyd": "eyd",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
@@ -452,8 +469,7 @@
         "nur": "nur",
         "stylix": "stylix",
         "wallpaper": "wallpaper",
-        "wrappers": "wrappers",
-        "zen-browser": "zen-browser"
+        "wrappers": "wrappers"
       }
     },
     "scenefx": {
@@ -634,30 +650,6 @@
       "original": {
         "owner": "lassulus",
         "repo": "wrappers",
-        "type": "github"
-      }
-    },
-    "zen-browser": {
-      "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1795043840,
-        "narHash": "sha256-xOaDTlUys2BZk0P0stG4a6DxW94iA5gJdFCTPAuKzgk=",
-        "owner": "0xc000022070",
-        "repo": "zen-browser-flake",
-        "rev": "1a7722e7e35d960a17d2f5dd085631f032a77336",
-        "type": "github"
-      },
-      "original": {
-        "owner": "0xc000022070",
-        "ref": "beta",
-        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

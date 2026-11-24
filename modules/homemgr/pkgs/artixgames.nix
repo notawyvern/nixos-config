@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.homeModules.guiapps =
+  flake.homeModules.artixgames =
     {
       pkgs,
       lib,

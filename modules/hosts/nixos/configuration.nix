@@ -29,10 +29,11 @@
           console
           packagemanager
           users
-          zswap
+          zram
 
           # global non-essential
           loginmanager
+          eraseyourdarlings
           services
           stylix
 

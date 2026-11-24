@@ -4,7 +4,7 @@
 }:
 
 {
-  flake.homeModules.mangowc =
+  flake.homeModules.mangowm =
     {
       pkgs,
       lib,
@@ -17,7 +17,6 @@
       xserver-xkb-layout = osConfig.services.xserver.xkb.layout;
       system = pkgs.stdenv.hostPlatform.system;
       pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      zen-browser = inputs.zen-browser.packages.${system}.default;
 
       # october 2026, mkOpacityHexColor generates ARGB,
       # not RGBA, opposing the docs. mango uses the latter.
@@ -137,7 +136,7 @@
               # launchers
               "SUPER,w,spawn,${pkgs.tofi}/bin/tofi-drun"
               "SUPER,t,spawn,${pkgs.foot}/bin/foot"
-              "SUPER,b,spawn,${zen-browser}/bin/zen-beta"
+              "SUPER,b,spawn,${pkgs-unstable.qutebrowser}/bin/qutebrowser"
               "none,Print,spawn,${pkgs.wayshot}/bin/wayshot -c --encoding jpg"
 
               # power

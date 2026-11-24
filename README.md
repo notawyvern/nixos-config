@@ -32,7 +32,7 @@ User crh is declared mutable. Brazilian Portuguese is enforced on locale and key
 
 Directory and file names are meaningful; [core](./modules/core/) for system-wide essentials, [mangowc](./modules/homemgr/mangowc/) for mango, etc. To learn, open each and read the comments.
 
-Workarounds can be for the lack of better solutions. October 2026, [webapps](./modules/homemgr/pkgs/webapps.nix) e.g. rely on Zen browser *webapps* profile to use full uBlock Origin.
+Workarounds can be for the lack of better solutions. October 2026, [webapps](./modules/homemgr/pkgs/webapps.nix) e.g. rely on the Firefox webapps profile to use full uBlock Origin.
 
 ### Tree
 
@@ -49,21 +49,22 @@ Workarounds can be for the lack of better solutions. October 2026, [webapps](./m
     │   ├── network.nix
     │   ├── packagemanager.nix
     │   ├── users.nix
-    │   └── zswap.nix
+    │   └── zram.nix
     ├── global
+    │   ├── eraseyourdarlings.nix
     │   ├── loginmanager.nix
     │   └── stylix.nix
     ├── homemgr
     │   ├── home.nix
-    │   ├── mangowc
+    │   ├── mangowm
     │   │   ├── mango-core.nix
-    │   │   └── mango.nix
+    │   │   └── mangowm.nix
     │   └── pkgs
     │       ├── artixgames.nix
-    │       ├── cli.nix
-    │       ├── gui.nix
-    │       ├── webapps.nix
-    │       └── zen-browser.nix
+    │       ├── cliapps.nix
+    │       ├── guiapps.nix
+    │       ├── qutebrowser.nix
+    │       └── webapps.nix
     └── hosts
         └── nixos
             ├── configuration.nix
@@ -97,31 +98,30 @@ sudo bash nixos-config/install.sh
 ### Tips
 
 1. **nixos-rebuild** is disabled. Use [nh](https://github.com/nix-community/nh), a modern alternative, instead.
-2. Access passwords through Zen preinstalled Bitwarden extension.
-3. All non-regional filters are turned on, no need to configure uBlock Origin.
-4. Waybar icons are minimal GUI settings. Press the brightness and audio keys if available.
-5. [flake.nix](./flake.nix) fetches a single wallpaper from [this repository](https://github.com/notawyvern/wallpapers). Source another image to replace it.
+2. Waybar icons are minimal GUI settings. Press the brightness and audio keys if available.
+3. [flake.nix](./flake.nix) fetches a single wallpaper from [this repository](https://github.com/notawyvern/wallpapers). Source another image to replace it.
+4. [eyd](https://github.com/misuzu/eyd) mostly wipes root at boot to *erase your darlings*. See the latest ones in **/oldroot**.
 
 ### Shortcuts
 
 The Windows or the Super key is used as Mod (modifier). The following shortcuts are the most important.
 
 - **Arrow keys**: press during boot to select generations
-- **Mod+b**: opens browser
-- **Mod+w**: launches the tofi launcher
-- **Mod+t**: opens the foot terminal
-- **Mod+q**: closes the currently focused window
+- **Mod+B**: opens browser
+- **Mod+W**: launches the tofi launcher
+- **Mod+T**: opens the foot terminal
+- **Mod+Q**: closes the currently focused window
 - **Mod+number**: changes the workspace
 - **Ctrl+Alt+Space**: quits mangowc back to Noctalia Greeter
-- **Mod+Shift+u**: powers off
-- **Mod+Shift+r**: reboots
+- **Mod+Shift+U**: powers off
+- **Mod+Shift+R**: reboots
 
 ### Software
 
 - **Bootloader**: Limine
 - **Wayland Compositor**: mangowm
 - **Login Manager**: Noctalia Greeter
-- **Browser**: Zen Browser
+- **Browser**: qutebrowser
 
 **Most programs follow:**
 
@@ -142,10 +142,10 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 * **GENERAL**
     - mpc-qt
     - fastfetch
-    - Zen Browser
+    - qutebrowser
     - PhotoCraft
     - mako
-    - Qalculate! GTK
+    - Qalculate! (Qt)
     - featherpad
     - pcmanfm-qt
     - lxqt-archiver
@@ -156,5 +156,5 @@ The Windows or the Super key is used as Mod (modifier). The following shortcuts 
 * **WEBAPPS**
     - Spotify
     - ChatGPT
-    - Proton Mail
-    - Koofr Drive
+    - GitHub
+    - ProtonMail
